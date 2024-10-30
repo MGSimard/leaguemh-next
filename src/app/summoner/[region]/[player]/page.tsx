@@ -4,6 +4,7 @@
 // import { MatchCard } from "../components/MatchCard/MatchCard";
 // import { SearchComponent } from "../components/SearchComponent/SearchComponent";
 // import { Spinner } from "../components/Spinner/Spinner";
+import { ZTestingButton } from "@/components/ZTestingButton";
 
 import { SearchComponent } from "@/components/SearchBar";
 
@@ -54,6 +55,7 @@ export default function Page() {
 
   return (
     <main>
+      <ZTestingButton />
       <section>
         <h2>SUMMONER PROFILE</h2>
         <div className="profile-card">
