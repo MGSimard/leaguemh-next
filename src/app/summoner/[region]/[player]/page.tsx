@@ -59,12 +59,11 @@ export default function Page() {
         <div className="profile-card">
           <div className="icon-container">
             <img
-              src={
-                ""
-                // ddVersion && targetProfile
-                //   ? `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/profileicon/${targetProfile.profileIconId}.png`
-                //   : "/default.png"
-              }
+              // src={
+              //   ddVersion && targetProfile
+              //     ? `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/profileicon/${targetProfile.profileIconId}.png`
+              //     : "/default.png"
+              // }
               alt="Profile Icon"
             />
             <small>{/*targetProfile && targetProfile.summonerLevel*/}</small>
