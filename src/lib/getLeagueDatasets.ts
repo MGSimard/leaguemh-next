@@ -1,16 +1,17 @@
 import { unstable_cacheLife as cacheLife } from "next/cache";
 
-/** As far as I understand it:
- * Stale: client-side cache duration
- * Revalidate: server-side cache refresh duration (if accessed again within limit, refreshes limit)
- * Expire: Maximum amount of time the server-side cache can be refreshed for before being forced to refetch
+/** cacheLife:
+ * cacheLife({ stale: N, revalidate: N, expire: N }) N = SECONDS.
+ * Stale:.......Cache may be stale on clients for N seconds before refetching from server.
+ * Revalidate:..If the server receives a new request after N seconds, start revalidating new values in the background.
+ * Expire:......If this entry has no traffic for N seconds it will expire. The next request will recompute it.
  */
 
 export async function getLeagueDatasets() {
   // Wanted top-level file "use cache" directive
   // But it's currently bugged: https://github.com/vercel/next.js/issues/71900
   "use cache";
-  cacheLife({ stale: 3600, revalidate: 900, expire: 86400 });
+  cacheLife({ stale: 3600, revalidate: 900, expire: 86400 }); // in seconds
 
   const [ddVersion] = await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
     .then((res) => res.json())
