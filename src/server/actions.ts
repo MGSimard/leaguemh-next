@@ -1,20 +1,23 @@
 "use server";
 
+// SUCCESS RETURN CONVENTION:
+// return { success: true, data, message: "SUCCESS: Text" };
+
+// ERROR RETURN CONVENTION
+// return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+
+// API KEY: ${process.env.RIOTAPIKEY}
+
 export async function serverTest() {
-  console.log(`RIOT API KEY: ${process.env.RIOTAPIKEY}`);
-  // try {
-  //   const res = await fetch("");
-
-  //   if (!res.ok) {
-  //     throw new Error(`HTTP Error: ${res.status}`);
-  //   }
-
-  //   const data = await res.json();
-
-  //   return { success: true, data, message: "SUCCESS" };
-  // } catch (err: unknown) {
-  //   return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
-  // }
+  try {
+    const res = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
+    if (!res.ok) throw new Error("There was an issue fetching the latest Data Dragon version.");
+    const result = await res.json();
+    const data = result[0];
+    return { success: true, data, message: "SUCCESS: Text" };
+  } catch (err) {
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+  }
 }
 
 export async function getLeagueDatasets() {
