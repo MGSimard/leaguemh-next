@@ -1,4 +1,5 @@
 "use server";
+import { getDDVersionResTypes } from "@/lib/types";
 
 // SUCCESS RETURN CONVENTION:
 // return { success: true, data, message: "SUCCESS: Text" };
@@ -8,13 +9,16 @@
 
 // API KEY: ${process.env.RIOTAPIKEY}
 
-export async function serverTest() {
+export async function serverTest() {}
+
+export async function getDDVersion(): Promise<getDDVersionResTypes> {
   try {
     const res = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
-    if (!res.ok) throw new Error("There was an issue fetching the latest Data Dragon version.");
-    const result = await res.json();
-    const data = result[0];
-    return { success: true, data, message: "SUCCESS: Text" };
+    if (!res.ok) throw new Error("HTTP ERROR: There was an issue fetching the latest Data Dragon version.");
+    const [ddVersion] = await res.json();
+    if (!ddVersion) throw new Error("There was an issue fetching the latest Data Dragon version.");
+
+    return { success: true, data: ddVersion, message: `SUCCESS: Latest Data Dragon version retrieved. (${ddVersion})` };
   } catch (err) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }

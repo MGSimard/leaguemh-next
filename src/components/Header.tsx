@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header>
       <h1>
-        <Link href="/">LOLMH.REACT</Link>
+        <Link href="/">LOLMH.NEXT</Link>
       </h1>
       <div className="header-divider"></div>
     </header>

@@ -4,9 +4,8 @@
 // import { MatchCard } from "../components/MatchCard/MatchCard";
 // import { SearchComponent } from "../components/SearchComponent/SearchComponent";
 // import { Spinner } from "../components/Spinner/Spinner";
-import { ZTestingButton } from "@/components/ZTestingButton";
-
 import { SearchComponent } from "@/components/SearchBar";
+import { ZTestingButton } from "@/components/ZTestingButton";
 
 export default function Page() {
   // Get region prefix & summoner name from URL Params
