@@ -9,7 +9,9 @@ import { getDDVersionResTypes } from "@/lib/types";
 
 // API KEY: ${process.env.RIOTAPIKEY}
 
-export async function serverTest() {}
+export async function serverTest() {
+  console.log(process.env.RIOTAPIKEY);
+}
 
 export async function getDDVersion(): Promise<getDDVersionResTypes> {
   try {

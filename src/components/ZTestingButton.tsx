@@ -3,8 +3,7 @@ import { serverTest } from "@/server/actions";
 import { getDDVersion } from "@/server/actions";
 
 const handleTest = async () => {
-  const result = await getDDVersion();
-  console.log(result);
+  await serverTest();
 };
 
 export function ZTestingButton() {
