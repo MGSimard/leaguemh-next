@@ -9,9 +9,9 @@ import { unstable_cacheLife as cacheLife } from "next/cache";
 
 export async function getLeagueDatasets() {
   // Wanted top-level file "use cache" directive
-  // But it's currently bugged: https://github.com/vercel/next.js/issues/71900
+  // But cacheLife outside fn is currently bugged (or docs wrong?): https://github.com/vercel/next.js/issues/71900
   "use cache";
-  cacheLife({ stale: 3600, revalidate: 900, expire: 86400 }); // in seconds
+  cacheLife({ stale: 300, revalidate: 43200 }); // 5m client & 12hrs server cache lengths
 
   const [ddVersion] = await fetch("https://ddragon.leagueoflegends.com/api/versions.json")
     .then((res) => res.json())
