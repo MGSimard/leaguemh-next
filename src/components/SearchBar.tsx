@@ -29,9 +29,9 @@ export const SearchComponent = ({ usedIn }: { usedIn: string }) => {
 
   return (
     <fieldset className={`sumSearch sumSearch-${usedIn}`}>
-      <label className="ssOne">
-        <h3>Region</h3>
-        <select ref={regionRef} defaultValue={""} onKeyDown={handleKeyDown}>
+      <label htmlFor="select-region" className="ssOne">
+        <span>Region</span>
+        <select id="select-region" ref={regionRef} defaultValue={""} onKeyDown={handleKeyDown}>
           <option value="" disabled>
             . . .
           </option>
@@ -54,15 +54,22 @@ export const SearchComponent = ({ usedIn }: { usedIn: string }) => {
         </select>
       </label>
       <div className="ssTwo-Three">
-        <label className="ssTwo">
-          <h3>Riot ID</h3>
-          <input type="text" placeholder="Riot ID..." ref={riotIdRef} onKeyDown={handleKeyDown} />
+        <label htmlFor="input-riotid" className="ssTwo">
+          <span>Riot ID</span>
+          <input id="input-riotid" type="text" placeholder="Riot ID..." ref={riotIdRef} onKeyDown={handleKeyDown} />
         </label>
-        <label className="ssThree">
-          <h3>Tag</h3>
+        <label htmlFor="input-tag" className="ssThree">
+          <span>Tag</span>
           <div className="rIdTag_inputContainer">
             #
-            <input type="text" placeholder="Tag..." ref={riotTagRef} maxLength={5} onKeyDown={handleKeyDown} />
+            <input
+              id="input-tag"
+              type="text"
+              placeholder="Tag..."
+              ref={riotTagRef}
+              maxLength={5}
+              onKeyDown={handleKeyDown}
+            />
           </div>
         </label>
       </div>

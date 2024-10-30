@@ -153,8 +153,11 @@ a {
   border: 1px solid var(--lolGrey3);
   border-radius: 4px;
 }
-.sumSearch h3 {
+.sumSearch span {
   font-size: 1.2rem;
+  line-height: 1.12rem;
+  color: var(--lolGold1);
+  font-weight: 700;
 }
 .sumSearch .ssTwo-Three {
   display: flex;
@@ -195,7 +198,7 @@ a {
   max-width: 60rem;
   margin: 0 auto;
 }
-.sumSearch-home h3 {
+.sumSearch-home span {
   margin-bottom: 0.2rem;
 }
 .sumSearch-home .ssTwo {
@@ -483,9 +486,15 @@ a {
 hr:not(footer hr) {
   margin-bottom: 5rem;
 }
+.home-main h3 {
+  margin-bottom: 2rem;
+}
 .feature-list,
 .feature-list ul {
   margin-left: 2rem;
+}
+.feature-list:not(:last-child) {
+  margin-bottom: 4rem;
 }
 .feature-list a {
   color: var(--lolGold4);
