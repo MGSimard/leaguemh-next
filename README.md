@@ -1,29 +1,59 @@
-# Create T3 App
+<br/>
+<div align="center">
+  <h3 align="center">LoLMH.Next</h3>
+  <p align="center">
+    Nextjs Project
+    <br/>
+    <br/>
+    <a href="#" target="_blank">View Live Project</a>  
+  </p>
+</div>
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## About The Project
 
-## What's next? How do I make an app with this?
+This is a Nextjs migration of LoLMH.React. Easier than setting up node or paying for serverless funtions to hide API key + not having to deal with Riot's API CORS shenanigans. Below is the original react project intro.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+`A recreation of my vanilla LoLCBL project, minus the CBL part, in React. Its only purpose is to fetch match histories of players across all League of Legends regions with public APIs. This project acts as practice with React, queries, and dynamic cdn asset fetching.`
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Now migrated to Nextjs & TypeScript. Functionalities unchanged - prefer keeping it the way it was for posterity, and show growth process.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Built With
 
-## Learn More
+<details>
+<summary><h3>Nextjs Version (Current)</h3></summary>
+<p>Post-migration.</p>
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- [Nextjs 15](https://nextjs.org/)
+- [TypeScript 5.6.3](https://www.typescriptlang.org/)
+- [AccountV1, SummonerV4, LeagueV4, MatchV5 & SummonerV4 Riot APIs](https://developer.riotgames.com/apis)
+- [DataDragon](https://riot-api-libraries.readthedocs.io/en/latest/ddragon.html)
+- [CommunityDragon](https://www.communitydragon.org/)
+- [Vercel Hosting](https://vercel.com/)
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+</details>
+<details>
+<summary><h3>React Version (Old)</h3></summary>
+<p>Prior to Nextjs migration.</p>
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [React Router DOM](https://reactrouter.com/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [AccountV1, SummonerV4, LeagueV4, MatchV5 & SummonerV4 Riot APIs](https://developer.riotgames.com/apis)
+- [DataDragon](https://riot-api-libraries.readthedocs.io/en/latest/ddragon.html)
+- [CommunityDragon](https://www.communitydragon.org/)
+- [Firebase Hosting](https://firebase.google.com/)
 
-## How do I deploy this?
+</details>
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Usage
+
+As per the example on the app's landing page; select a region, enter a summoner name & tag then click fetch.
+-> [#](App Link)
+
+## Contact
+
+MGSimard - g.marcgs@gmail.com  
+[@MGSimard on X](https://x.com/MGSimard)
+
+For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
