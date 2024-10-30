@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import reactCompiler from "eslint-plugin-react-compiler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +23,7 @@ export default [
   {
     plugins: {
       "@typescript-eslint": typescriptEslint,
+      "react-compiler": reactCompiler,
     },
 
     languageOptions: {
@@ -35,9 +37,9 @@ export default [
     },
 
     rules: {
+      "react-compiler/react-compiler": "error",
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
-
       "@typescript-eslint/consistent-type-imports": [
         "warn",
         {
@@ -45,16 +47,13 @@ export default [
           fixStyle: "inline-type-imports",
         },
       ],
-
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
           argsIgnorePattern: "^_",
         },
       ],
-
       "@typescript-eslint/require-await": "off",
-
       "@typescript-eslint/no-misused-promises": [
         "error",
         {
