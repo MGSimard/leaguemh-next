@@ -80,6 +80,9 @@ button {
 }
 
 /* CORE */
+main {
+  flex-grow: 1;
+}
 main,
 footer {
   padding: 0 2rem;
@@ -165,7 +168,6 @@ hr:not(footer hr) {
 
 /* CSS FOR CORE COMPONENT ELEMENTS */
 .notFoundContainer {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
