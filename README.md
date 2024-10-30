@@ -1,7 +1,3 @@
-### TASK LIST
-
-- [ ] Escape root layout for not-found.tsx
-
 <br/>
 <div align="center">
   <h3 align="center">LoLMH.Next</h3>
