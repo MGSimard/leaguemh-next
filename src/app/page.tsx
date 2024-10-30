@@ -1,10 +1,12 @@
+import { SearchComponent } from "@/components/SearchBar";
+
 export default function Page() {
   return (
     <main className="home-main">
       <section className="search-section">
         <h2>SEARCH SUMMONER</h2>
         <small>&#40;Example: "North America", "Doublelift", "NA1"&#41;</small>
-        {/* <SearchComponent location={"home"} /> */}
+        <SearchComponent usedIn={"home"} />
       </section>
       <section>
         <hr />
