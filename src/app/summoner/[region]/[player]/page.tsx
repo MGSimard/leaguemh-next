@@ -8,7 +8,9 @@ import { SearchComponent } from "@/components/SearchBar";
 import { ZTestingButton } from "@/components/ZTestingButton";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 
-export default function Page() {
+export default async function Page() {
+  const result = await getLeagueDatasets();
+  console.log("Get League Datasets:", result);
   // Get region prefix & summoner name from URL Params
   // const { regionPrefix, summoner } = useParams();
 

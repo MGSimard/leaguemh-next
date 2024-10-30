@@ -3,7 +3,8 @@ import { serverTest } from "@/server/actions";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 
 const handleTest = async () => {
-  await getLeagueDatasets();
+  const result = await serverTest();
+  console.log("Server Test Result:", result);
 };
 
 export function ZTestingButton() {
