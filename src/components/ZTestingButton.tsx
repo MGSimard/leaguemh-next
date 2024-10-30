@@ -1,9 +1,9 @@
 "use client";
 import { serverTest } from "@/server/actions";
-import { getDDVersion } from "@/server/actions";
+import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 
 const handleTest = async () => {
-  console.log(await getDDVersion());
+  await getLeagueDatasets();
 };
 
 export function ZTestingButton() {

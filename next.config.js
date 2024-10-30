@@ -8,6 +8,7 @@ await import("./src/env.js");
 const config = {
   experimental: {
     reactCompiler: true,
+    dynamicIO: true,
   },
   devIndicators: {
     appIsrStatus: false,
