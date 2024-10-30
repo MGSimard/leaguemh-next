@@ -1,9 +1,8 @@
-import { Footer } from "@/components/Footer";
+import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import "@/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
-import { type Metadata } from "next";
+import { beaufortForLol, spiegel } from "@/lib/localFonts";
 
 export const metadata: Metadata = {
   title: "LoLMH.Next",
@@ -13,8 +12,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={GeistSans.className}>
+    <html lang="en" className={`${spiegel.className} ${beaufortForLol.className}`}>
+      <body>
         <Header />
         {children}
         <Footer />
