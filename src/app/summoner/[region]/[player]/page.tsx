@@ -1,18 +1,26 @@
-// import { useParams } from "react-router-dom";
+"use cache";
 // import { usePlayerData } from "../hooks/usePlayerData";
-// import { useLeagueData } from "../hooks/useLeagueData";
 // import { MatchCard } from "../components/MatchCard/MatchCard";
-// import { SearchComponent } from "../components/SearchComponent/SearchComponent";
-// import { Spinner } from "../components/Spinner/Spinner";
-import { SearchComponent } from "@/components/SearchBar";
-import { ZTestingButton } from "@/components/ZTestingButton";
+import { unstable_cacheLife as cacheLife } from "next/cache";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
+import { SearchComponent } from "@/components/SearchBar";
+import { Spinner } from "@/components/Spinner";
+cacheLife("hours");
 
-export default async function Page() {
+/** cacheLife:
+ * cacheLife({ stale: N, revalidate: N, expire: N }) N = SECONDS.
+ * Stale:.......Cache may be stale on clients for N seconds before refetching from server.
+ * Revalidate:..If the server receives a new request after N seconds, start revalidating new values in the background.
+ * Expire:......If this entry has no traffic for N seconds it will expire. The next request will recompute it.
+ */
+// cacheLife outside fn is currently bugged (or docs wrong?): https://github.com/vercel/next.js/issues/71900
+
+export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
+  const { region: regionPrefix, player: summoner } = await params;
+
   const result = await getLeagueDatasets();
-  console.log("Get League Datasets:", result);
-  // Get region prefix & summoner name from URL Params
-  // const { regionPrefix, summoner } = useParams();
+  const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = result;
+  console.log(ddVersion);
 
   // const {
   //   targetIdentity,
@@ -25,20 +33,7 @@ export default async function Page() {
   //   playerDataErrors,
   //   fullRegion,
   // } = usePlayerData(regionPrefix, summoner);
-
-  // const {
-  //   ddVersion,
-  //   datasetChampions,
-  //   datasetModes,
-  //   datasetRunes,
-  //   datasetSumSpells,
-  //   datasetItems,
-  //   datasetArena,
-  //   anyDatasetPending,
-  //   anyDatasetErrors,
-  //   datasetErrors,
-  // } = useLeagueData();
-
+  //
   // const rankHandler = (resolvedRankData) => {
   //   if (resolvedRankData.length) {
   //     const checkSoloQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_SOLO_5x5");
@@ -57,7 +52,6 @@ export default async function Page() {
 
   return (
     <main>
-      <ZTestingButton />
       <section>
         <h2>SUMMONER PROFILE</h2>
         <div className="profile-card">
@@ -143,5 +137,3 @@ export default async function Page() {
     </main>
   );
 }
-
-//
