@@ -1,5 +1,6 @@
 // "use cache";
 import { unstable_cacheLife as cacheLife } from "next/cache";
+import { Suspense } from "react";
 import { getPlayerData } from "@/server/actions";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 import { SearchComponent } from "@/components/SearchBar";
@@ -19,7 +20,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
   const { region: regionPrefix, player: summoner } = await params;
 
   const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = await getLeagueDatasets();
-  const [targetIdentity, targetProfile, targetRank, matchDataArray, fullRegion] = await getPlayerData(
+  const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = await getPlayerData(
     regionPrefix,
     summoner
   );
@@ -97,14 +98,17 @@ export default async function Page({ params }: { params: Promise<{ region: strin
           {/* Move match data fetching into diff component that gets fed puuid */}
           {/* Suspense match history with <Spinner /> fallback */}
           {/* Is loading, no errors */}
-          {matchDataArray &&
-            matchDataArray.map((match) => (
-              <MatchCard
-                key={match.metadata.matchId}
-                matchData={match}
-                targetPlayer={targetIdentity.puuid}
-                dataset={[ddVersion, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena]}
-              />
+          {matchIdList &&
+            matchIdList.map((matchId) => (
+              <Suspense fallback={<Spinner />}>
+                <MatchCard
+                  key={matchId}
+                  matchId={matchId}
+                  regionPrefix={regionPrefix}
+                  targetPlayer={targetIdentity.puuid}
+                  dataset={[ddVersion, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena]}
+                />
+              </Suspense>
             ))}
         </div>
       </section>

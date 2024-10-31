@@ -26,20 +26,18 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
   // prettier-ignore
   const targetRank = await fetch(`https://${shard}.api.riotgames.com/lol/league/v4/entries/by-summoner/${targetProfile.id}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: LEAGUE RANK. STATUS: ${res.status}`);return res.json();}).catch((err) => console.error(err));
 
-  const matches = await Promise.allSettled(
-    matchIdList.map(async (matchId: string) =>
-      fetch(`https://${cluster}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${APIKEY}`)
-        .then((res) => {
-          if (!res.ok) throw new Error(`FETCH ERROR: MATCH ${matchId}. STATUS: ${res.status}`);
-          return res.json();
-        })
-        .catch((error) => {
-          console.error(error);
-          return Promise.reject();
-        })
-    )
-  );
-  const matchDataArray = matches.filter((res) => res.status === "fulfilled").map((res) => res.value);
+  return [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion];
+}
 
-  return [targetIdentity, targetProfile, targetRank, matchDataArray, fullRegion];
+export async function getMatchData(matchId: string, regionPrefix: string) {
+  const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
+
+  const matchData = fetch(
+    `https://${cluster}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${APIKEY}`
+  ).then((res) => {
+    if (!res.ok) throw new Error(`FETCH ERROR: MATCH ${matchId}. STATUS: ${res.status}`);
+    return res.json();
+  });
+
+  return matchData;
 }

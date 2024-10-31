@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { modeDictionary, reverseRegionDictionary, timeSince, calcDuration } from "@/lib/helpers";
+import { getMatchData } from "@/server/actions";
 
 const TeamsArena = ({ players, dsChampions, ddVersion, platformId }) => {
   const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
@@ -113,7 +114,8 @@ const getChampFrame = (dsChampions, championId, ddVersion) => {
   } else return null;
 };
 
-export const MatchCard = ({ matchData, targetPlayer, dataset }) => {
+export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }) {
+  const matchData = await getMatchData(matchId, regionPrefix);
   // Simplify some match data
   const { gameDuration, gameStartTimestamp, participants, platformId, queueId } = matchData.info;
 
@@ -258,4 +260,4 @@ export const MatchCard = ({ matchData, targetPlayer, dataset }) => {
       </div>
     </div>
   );
-};
+}
