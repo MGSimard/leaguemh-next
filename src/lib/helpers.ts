@@ -151,6 +151,8 @@ export function regionDictionary(regionPrefix: string) {
       return ["EUW1", "europe", "Europe West"];
     case "eun":
       return ["EUN1", "europe", "Europe Nordic & East"];
+    case "me":
+      return ["ME1", "europe", "Middle East"];
     case "tr":
       return ["TR1", "europe", "Türkiye"];
     case "ru":
@@ -162,15 +164,15 @@ export function regionDictionary(regionPrefix: string) {
       return ["SG2", "sea", "Singapore"];
     case "ph":
       return ["PH2", "sea", "Phillippines"];
+    case "th":
+      return ["TH2", "sea", "Thailand"];
     case "tw":
       return ["TW2", "sea", "Taiwan"];
     case "vn":
       return ["VN2", "sea", "Vietnam"];
-    case "th":
-      return ["TH2", "sea", "Thailand"];
     default:
       alert("Invalid Region!");
-      return;
+      return ["", "", ""];
   }
 }
 
