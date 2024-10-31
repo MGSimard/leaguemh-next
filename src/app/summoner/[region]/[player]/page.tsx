@@ -1,11 +1,11 @@
-"use cache";
+// "use cache";
 // import { usePlayerData } from "../hooks/usePlayerData";
 // import { MatchCard } from "../components/MatchCard/MatchCard";
 import { unstable_cacheLife as cacheLife } from "next/cache";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 import { SearchComponent } from "@/components/SearchBar";
 import { Spinner } from "@/components/Spinner";
-cacheLife("hours");
+// cacheLife("hours");
 
 /** cacheLife:
  * cacheLife({ stale: N, revalidate: N, expire: N }) N = SECONDS.
