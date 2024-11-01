@@ -50,6 +50,7 @@ export interface dsChampionsTypes {
     };
   };
 }
+
 export type dsRunesTypes = {
   id: number;
   key: string;
@@ -66,7 +67,42 @@ export type dsRunesTypes = {
     }[];
   }[];
 }[];
-export type dsSumSpellsTypes = {}[];
+
+export interface dsSumSpellsTypes {
+  [sumSpell: string]: {
+    id: string;
+    name: string;
+    description: string;
+    tooltip: string;
+    maxrank: number;
+    cooldown: [number];
+    cooldownBurn: string;
+    cost: [number];
+    costburn: string;
+    datavalues: {};
+    effect: ([number] | null)[];
+    effectBurn: (string | null)[];
+    vars: [];
+    key: string;
+    summonerLevel: number;
+    modes: string[];
+    costType: string;
+    maxammo: string;
+    range: [number];
+    rangeBurn: string;
+    image: {
+      full: string;
+      sprite: string;
+      group: string;
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+    };
+    resource: string;
+  };
+}
+
 export interface dsItemsTypes {}
 export interface dsModesTypes {}
 export interface dsArenaTypes {}
