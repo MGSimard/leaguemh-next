@@ -136,7 +136,18 @@ export type dsModesTypes = {
   description: string | null;
   notes: string | null;
 }[];
-export interface dsArenaTypes {}
+export type dsArenaTypes = {
+  apiName: string;
+  calculations: {}; //no thanks lol
+  dataValues: { [stat: string]: number };
+  desc: string;
+  iconLarge: string;
+  iconSmall: string;
+  id: number;
+  name: string;
+  rarity: number;
+  tooltip: string;
+}[];
 
 /* RIOT API TYPES */
 export interface accountsV1ResTypes {

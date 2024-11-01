@@ -18,7 +18,5 @@ export async function getLeagueDatasets() {
     fetch("https://raw.communitydragon.org/latest/cdragon/arena/en_us.json").then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: ARENA DATASET. STATUS: ${res.status}`);return res.json();}).then((data) => data.augments).catch((err) => {console.error(err);Promise.reject(err)}),
   ]);
 
-  console.log();
-
   return [ddVersion, ...result.map((res) => (res.status === "fulfilled" ? res.value : null))];
 }
