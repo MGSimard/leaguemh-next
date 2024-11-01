@@ -12,7 +12,7 @@
     Nextjs Project
     <br/>
     <br/>
-    <a href="#" target="_blank">View Live Project</a>  
+    <a href="https://leaguemh-next.vercel.app/" target="_blank">View Live Project</a>  
   </p>
 </div>
 
@@ -56,7 +56,7 @@ Now migrated to Nextjs & TypeScript. Functionalities unchanged - prefer keeping 
 ## Usage
 
 As per the example on the app's landing page; select a region, enter a summoner name & tag then click fetch.
--> [#](App Link)
+-> [https://leaguemh-next.vercel.app/](https://leaguemh-next.vercel.app/)
 
 ## Contact
 

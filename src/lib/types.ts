@@ -33,8 +33,6 @@ export interface GetPlayerDataResTypes {
   data?: [AccountsV1ResTypes, SummonerV4ResTypes, LeagueV4ResTypes, matchV5ListResTypes, string];
   message: string;
 }
-// AccountV1        SummonerV4       LeagueV4   MatchV5 (list), string
-//[targetIdentity, targetProfile, targetRank, matchIdList, fullRegion]
 
 export interface GetMatchDataResTypes {
   data?: MatchV5DtoResTypes;
