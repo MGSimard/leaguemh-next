@@ -21,10 +21,11 @@ jobs:
         with:
           node-version: latest
 
-      - name: Setup pnpm
+      - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.12.3
+          run_install: false
 
       - name: Install Dependencies
         run: pnpm install
@@ -34,18 +35,25 @@ jobs:
           mkdir -p src/datasets  # Create the datasets directory if it doesn't exist
           set -e  # Exit immediately if a command exits with a non-zero status
 
+          echo "Fetching Data Dragon version..."
+          ddVersion=$(curl -fs "https://ddragon.leagueoflegends.com/api/versions.json" | jq -r '.[0]')
+          if [ -z "$ddVersion" ]; then
+            echo "Failed to fetch DataDragon version."
+            exit 1
+          fi
+
           echo "Fetching champion dataset..."
-          curl -o src/datasets/champion.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/champion.json"
+          curl -fs -o src/datasets/champion.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/champion.json"
           echo "Fetching runes dataset..."
-          curl -o src/datasets/runesReforged.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/runesReforged.json"
+          curl -fs -o src/datasets/runesReforged.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/runesReforged.json"
           echo "Fetching summoner spells dataset..."
-          curl -o src/datasets/summoner.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/summoner.json"
+          curl -fs -o src/datasets/summoner.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/summoner.json"
           echo "Fetching items dataset..."
-          curl -o src/datasets/item.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/item.json"
+          curl -fs -o src/datasets/item.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/item.json"
           echo "Fetching queues dataset..."
-          curl -o src/datasets/queues.json "https://static.developer.riotgames.com/docs/lol/queues.json"
+          curl -fs -o src/datasets/queues.json "https://static.developer.riotgames.com/docs/lol/queues.json"
           echo "Fetching arena dataset..."
-          curl -o src/datasets/arena.json "https://raw.communitydragon.org/latest/cdragon/arena/en_us.json"
+          curl -fs -o src/datasets/arena.json "https://raw.communitydragon.org/latest/cdragon/arena/en_us.json"
 
       - name: Commit and Push Changes
         run: |
