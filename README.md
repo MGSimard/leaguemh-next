@@ -1,3 +1,10 @@
+## TASK LIST:
+
+- [ ] LEARN HOW TO USE GITHUB ACTIONS AS SOME FORM OF CRON JOB.
+- [ ] MOVE GETLEAGUEDATASETS FETCHES INTO AUTOMATED ACTIONS EVERY N HOURS (12 or 24)
+      I really shouldn't be fetching these kind of per-patch, semi-static json files on user visits anymore, now that I have a better idea of what I'm doing in webdev. This would also allow me to forego typescript headaches, consistently having to log stuff I'm looking at etc.
+- [ ] SO AGAIN, LEARN HOW TO AUTOMATICALLY DOWNLOAD THESE JSON FILES EVERY N HOURS AND FORCEDEPLOY
+
 <br/>
 <div align="center">
   <h3 align="center">LoLMH.Next</h3>
