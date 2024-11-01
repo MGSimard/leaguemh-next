@@ -46,7 +46,5 @@ export async function getMatchData(matchId: string, regionPrefix: string) {
     return res.json();
   });
 
-  console.log(matchData);
-
   return matchData;
 }
