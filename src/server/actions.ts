@@ -31,7 +31,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
       message: "SUCCESS: Profile data fetched.",
     };
   } catch (err: unknown) {
-    console.error(err);
+    console.error(err instanceof Error ? err.message : "UNKNOWN ERROR.");
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }

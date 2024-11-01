@@ -1,7 +1,6 @@
 /* DATASET TYPES */
-export type ddVersionTypes = string;
-
-export interface dsChampionsTypes {
+type ddVersionTypes = string;
+interface dsChampionsTypes {
   [champion: string]: {
     version: string;
     id: string;
@@ -50,8 +49,7 @@ export interface dsChampionsTypes {
     };
   };
 }
-
-export type dsRunesTypes = {
+type dsRunesTypes = {
   id: number;
   key: string;
   icon: string;
@@ -67,8 +65,7 @@ export type dsRunesTypes = {
     }[];
   }[];
 }[];
-
-export interface dsSumSpellsTypes {
+interface dsSumSpellsTypes {
   [sumSpell: string]: {
     id: string;
     name: string;
@@ -102,8 +99,7 @@ export interface dsSumSpellsTypes {
     resource: string;
   };
 }
-
-export interface dsItemsTypes {
+interface dsItemsTypes {
   [itemId: string]: {
     name: string;
     description: string;
@@ -130,13 +126,13 @@ export interface dsItemsTypes {
     stats: { [stat: string]: number };
   };
 }
-export type dsModesTypes = {
+type dsModesTypes = {
   queueId: number;
   map: string;
   description: string | null;
   notes: string | null;
 }[];
-export type dsArenaTypes = {
+type dsArenaTypes = {
   apiName: string;
   calculations: {}; //no thanks lol
   dataValues: { [stat: string]: number };
@@ -148,6 +144,11 @@ export type dsArenaTypes = {
   rarity: number;
   tooltip: string;
 }[];
+export interface GetLeagueDatasetsTypes {
+  success: boolean;
+  data?: [ddVersionTypes, dsChampionsTypes, dsRunesTypes, dsSumSpellsTypes, dsItemsTypes, dsModesTypes, dsArenaTypes];
+  message: string;
+}
 
 /* RIOT API TYPES */
 export interface accountsV1ResTypes {

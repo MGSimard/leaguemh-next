@@ -20,15 +20,21 @@ import { Spinner } from "@/components/Spinner";
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
 
-  const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = await getLeagueDatasets();
-  const { success, data, message } = await getPlayerData(regionPrefix, summoner);
+  const { success, data, message } = await getLeagueDatasets();
 
-  if (!data) return <div>ERROR</div>;
-  const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
+  // const { success, data, message } = await getPlayerData(regionPrefix, summoner);
+  console.log(success ? "Success." : "Failed.");
+  if (!success || !data) return <div>You broke it</div>;
+
+  const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
+  console.log(dsRunes[1]);
+
+  // if (!data) return <div>ERROR</div>;
+  // const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
 
   return (
     <main>
-      <section>
+      {/* <section>
         <h2>SUMMONER PROFILE</h2>
         <div className="profile-card">
           <div className="icon-container">
@@ -79,9 +85,6 @@ export default async function Page({ params }: { params: Promise<{ region: strin
       <section>
         <h2>MATCH HISTORY</h2>
         <div className="match-history">
-          {/* Move match data fetching into diff component that gets fed puuid */}
-          {/* Suspense match history with <Spinner /> fallback */}
-          {/* Is loading, no errors */}
           {matchIdList &&
             matchIdList.map((matchId) => (
               <Suspense fallback={<Spinner />} key={matchId}>
@@ -95,7 +98,17 @@ export default async function Page({ params }: { params: Promise<{ region: strin
               </Suspense>
             ))}
         </div>
-      </section>
+      </section> */}
     </main>
   );
+}
+
+{
+  /* Move match data fetching into diff component that gets fed puuid */
+}
+{
+  /* Suspense match history with <Spinner /> fallback */
+}
+{
+  /* Is loading, no errors */
 }
