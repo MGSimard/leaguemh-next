@@ -296,15 +296,17 @@ export function getRunesSumsAugs(
     // If not arena, get runes and summoners.
     if (num === 1) {
       // Keystone
-      for (let i = 0; i < dsRunes.length; i++) {
-        let keystone;
-        keystone = dsRunes[i]!.slots[0]!.runes.find(
-          (rune) => rune.id === targetPlayerData.perks.styles[0]!.selections[0]!.perk
+      for (const rune of dsRunes) {
+        const keystone = rune.slots[0]?.runes.find(
+          (rune) => rune.id === targetPlayerData.perks.styles[0]?.selections[0]?.perk
         );
-        if (keystone) return `https://ddragon.canisback.com/img/${keystone.icon}`;
+
+        if (keystone) {
+          return `https://ddragon.canisback.com/img/${keystone.icon}`;
+        }
       }
     } else if (num === 3) {
-      const styleId = targetPlayerData.perks.styles[1]!.style;
+      const styleId = targetPlayerData.perks.styles[1]?.style;
       const foundStyle = dsRunes.find((style) => style.id === styleId);
 
       if (foundStyle) {
