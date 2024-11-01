@@ -1,4 +1,5 @@
 // https://developer.riotgames.com/apis#match-v5/GET_getMatch
+// In the future, consider setting enums once interfacing with these types.
 export interface MatchDto {
   metadata: MetadataDto;
   info: InfoDto;
