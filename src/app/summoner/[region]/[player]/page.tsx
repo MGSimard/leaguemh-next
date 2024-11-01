@@ -11,8 +11,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
   const { data, message } = await getPlayerData(regionPrefix, summoner);
   const patchVer = versionsJson[0];
 
-  // Obviously handle this better later
-  if (!data) return <div>You broke it idiot: {JSON.stringify(message)}</div>;
+  if (!data) return <ErrorSkelly summoner={summoner} />;
 
   const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
 
@@ -33,15 +32,10 @@ export default async function Page({ params }: { params: Promise<{ region: strin
             <small>{targetProfile.summonerLevel}</small>
           </div>
           <div className="profileTable-container">
-            {!data && `There was an issue fetching summoner profile. (${summoner})`}
-            {data && (
-              <>
-                <h3 className="pBold">
-                  {targetIdentity.gameName} <span>#{targetIdentity.tagLine}</span>
-                  {targetRank && <small className="pLabel">{rankDisplayFormatter(targetRank)}</small>}
-                </h3>
-              </>
-            )}
+            <h3 className="pBold">
+              {targetIdentity.gameName} <span>#{targetIdentity.tagLine}</span>
+              {targetRank && <small className="pLabel">{rankDisplayFormatter(targetRank)}</small>}
+            </h3>
             <table className="profileTable">
               <tbody>
                 <tr>
@@ -50,15 +44,15 @@ export default async function Page({ params }: { params: Promise<{ region: strin
                 </tr>
                 <tr>
                   <th>SummonerID</th>
-                  <td>{targetProfile?.id}</td>
+                  <td>{targetProfile.id}</td>
                 </tr>
                 <tr>
                   <th>AccountID</th>
-                  <td>{targetProfile?.accountId}</td>
+                  <td>{targetProfile.accountId}</td>
                 </tr>
                 <tr>
                   <th>PUUID</th>
-                  <td>{targetProfile?.puuid}</td>
+                  <td>{targetProfile.puuid}</td>
                 </tr>
               </tbody>
             </table>
@@ -87,3 +81,47 @@ export default async function Page({ params }: { params: Promise<{ region: strin
     </main>
   );
 }
+
+const ErrorSkelly = ({ summoner }: { summoner: string }) => {
+  return (
+    <main>
+      <section>
+        <h2>SUMMONER PROFILE</h2>
+        <div className="profile-card">
+          <div className="icon-container">
+            <img src={"/avatar-default.png"} alt="Profile Icon" />
+          </div>
+          <div className="profileTable-container">
+            There was an issue fetching summoner profile. ({summoner})
+            <table className="profileTable">
+              <tbody>
+                <tr>
+                  <th>Region</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>SummonerID</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>AccountID</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PUUID</th>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <SearchComponent usedIn="summoner" />
+        </div>
+      </section>
+
+      <section>
+        <h2>MATCH HISTORY</h2>
+        <div className="match-history"></div>
+      </section>
+    </main>
+  );
+};
