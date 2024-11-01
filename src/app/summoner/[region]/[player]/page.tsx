@@ -20,14 +20,9 @@ import { Spinner } from "@/components/Spinner";
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
 
-  const { success, data, message } = await getLeagueDatasets();
-
+  // const { success, data, message } = await getLeagueDatasets();
   // const { success, data, message } = await getPlayerData(regionPrefix, summoner);
-  console.log(success ? "Success." : "Failed.");
-  if (!success || !data) return <div>You broke it</div>;
-
-  const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
-  console.log(dsRunes[1]);
+  // const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
 
   // if (!data) return <div>ERROR</div>;
   // const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
