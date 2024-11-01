@@ -1,6 +1,12 @@
 "use server";
 import { regionDictionary } from "@/lib/helpers";
-import type { AccountsV1ResTypes, GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
+import type {
+  AccountsV1ResTypes,
+  SummonerV4ResTypes,
+  MatchV5ListResTypes,
+  GetMatchDataResTypes,
+  GetPlayerDataResTypes,
+} from "@/lib/types";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -26,7 +32,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
     });
 
     // prettier-ignore
-    const [targetProfile, matchIdList] = await Promise.all([
+    const [targetProfile, matchIdList]: [SummonerV4ResTypes, MatchV5ListResTypes] = await Promise.all([
       fetch(`https://${shard}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${targetIdentity.puuid}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: SUMMONER PROFILE. STATUS: ${res.status}`);return res.json();}),
       fetch(`https://${cluster}.api.riotgames.com/lol/match/v5/matches/by-puuid/${targetIdentity.puuid}/ids?start=0&count=1&api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: MATCH ID LIST. STATUS: ${res.status}`);return res.json();}),
     ]);
@@ -44,7 +50,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
 }
 
 export async function getMatchData(matchId: string, regionPrefix: string): Promise<GetMatchDataResTypes> {
-  const [cluster] = regionDictionary(regionPrefix);
+  const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
 
   try {
     const matchData = await fetch(

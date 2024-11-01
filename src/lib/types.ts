@@ -5,7 +5,7 @@ export interface AccountsV1ResTypes {
   gameName: string;
   tagLine: string;
 }
-interface SummonerV4ResTypes {
+export interface SummonerV4ResTypes {
   id: string;
   accountId: string;
   puuid: string;
@@ -27,10 +27,10 @@ export type LeagueV4ResTypes = {
   freshBlood: boolean;
   hotStreak: boolean;
 }[];
-type matchV5ListResTypes = string[];
+export type MatchV5ListResTypes = string[];
 
 export interface GetPlayerDataResTypes {
-  data?: [AccountsV1ResTypes, SummonerV4ResTypes, LeagueV4ResTypes, matchV5ListResTypes, string];
+  data?: [AccountsV1ResTypes, SummonerV4ResTypes, LeagueV4ResTypes, MatchV5ListResTypes, string];
   message: string;
 }
 

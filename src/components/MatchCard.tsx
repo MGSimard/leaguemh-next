@@ -59,12 +59,12 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(1, queueId, "runes", targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(1, queueId, targetPlayerData)}")`,
               }}></div>
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(3, queueId, "runes", targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(3, queueId, targetPlayerData)}")`,
                 backgroundSize: `${queueId === 1700 || queueId === 1710 ? "cover" : "50%"}`,
               }}></div>
           </div>
@@ -72,12 +72,12 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
             <div
               className="sum"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(2, queueId, "sums", targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(2, queueId, targetPlayerData)}")`,
               }}></div>
             <div
               className="sum"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(4, queueId, "sums", targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(4, queueId, targetPlayerData)}")`,
               }}></div>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import { LeagueV4ResTypes } from "@/lib/types";
-import { ParticipantDto } from "./typesMatchV5";
+import type { LeagueV4ResTypes } from "@/lib/types";
+import type { ParticipantDto } from "@/lib/typesMatchV5";
 import versionsJson from "@/datasets/versions.json";
 import championsJson from "@/datasets/champion.json";
 import runesJson from "@/datasets/runesReforged.json";
@@ -275,14 +275,8 @@ export function getChampFrame(championId: number) {
   return null;
 }
 
-export function getRunesSumsAugs(
-  num: number,
-  queueId: number,
-  type: "sums" | "runes",
-  targetPlayerData: ParticipantDto
-) {
+export function getRunesSumsAugs(num: number, queueId: number, targetPlayerData: ParticipantDto) {
   // datasetX is Runes or Summoners depending on input.
-  const set = type === "sums" ? dsSumSpells : dsRunes;
 
   // If Arena, check for augment ID. Return augment asset image if found.
   if (queueId === 1700 || queueId === 1710) {
@@ -314,7 +308,7 @@ export function getRunesSumsAugs(
       }
     } else if (num === 2 || num === 4) {
       const sumId = targetPlayerData[`summoner${num / 2}Id` as keyof ParticipantDto];
-      const foundSpell = Object.entries(dsSumSpells).find(([spell, info]) => info.key == sumId);
+      const foundSpell = Object.entries(dsSumSpells).find(([_, info]) => info.key == sumId);
       if (foundSpell) {
         const spellImage = foundSpell[1].image.full;
         return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${spellImage}`;
