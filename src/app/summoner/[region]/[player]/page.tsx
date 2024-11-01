@@ -84,7 +84,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
         <h2>MATCH HISTORY</h2>
         <div className="match-history">
           {matchIdList && (
-            <Suspense>
+            <Suspense fallback={<Spinner />}>
               {matchIdList.map((matchId) => (
                 <MatchCard
                   key={matchId}
