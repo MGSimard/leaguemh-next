@@ -7,6 +7,8 @@ import { SearchComponent } from "@/components/SearchBar";
 import { rankDisplayFormatter } from "@/lib/helpers";
 import { MatchCard } from "@/components/MatchCard";
 import { Spinner } from "@/components/Spinner";
+import "@/datasets/versions.json" fr;
+
 // cacheLife("hours");
 
 /** cacheLife:
@@ -20,9 +22,11 @@ import { Spinner } from "@/components/Spinner";
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
 
+  const [patchVer] = 
+
   // const { success, data, message } = await getLeagueDatasets();
   // const { success, data, message } = await getPlayerData(regionPrefix, summoner);
-  // const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
+  // const [patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
 
   // if (!data) return <div>ERROR</div>;
   // const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
@@ -35,8 +39,8 @@ export default async function Page({ params }: { params: Promise<{ region: strin
           <div className="icon-container">
             <img
               src={
-                ddVersion && targetProfile
-                  ? `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/profileicon/${targetProfile.profileIconId}.png`
+                patchVer && targetProfile
+                  ? `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/profileicon/${targetProfile.profileIconId}.png`
                   : "/avatar-default.png"
               }
               alt="Profile Icon"
@@ -88,7 +92,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
                   matchId={matchId}
                   regionPrefix={regionPrefix}
                   targetPlayer={targetIdentity.puuid}
-                  dataset={[ddVersion, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena]}
+                  dataset={[patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena]}
                 />
               </Suspense>
             ))}

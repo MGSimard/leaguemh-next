@@ -2,8 +2,8 @@ name: Fetch and Update Datasets
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # Runs every 12 hours
-  workflow_dispatch:  # Allows manual triggering
+    - cron: "0 */12 * * *" # Runs every 12 hours
+  workflow_dispatch: # Allows manual triggering
 
 permissions:
   contents: write
@@ -37,21 +37,21 @@ jobs:
 
           echo "Fetching versions..."
           curl -fs "https://ddragon.leagueoflegends.com/api/versions.json" | jq '.' > src/datasets/versions.json
-          ddVersion=$(jq -r '.[0]' src/datasets/versions.json)  # Extract the latest version
+          patchVer=$(jq -r '.[0]' src/datasets/versions.json)  # Extract the latest version
 
-          if [ -z "$ddVersion" ]; then
+          if [ -z "$patchVer" ]; then
             echo "Failed to fetch DataDragon version."
             exit 1
           fi
 
           echo "Fetching champion dataset..."
-          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/champion.json" | jq '.' > src/datasets/champion.json
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${patchVer}/data/en_US/champion.json" | jq '.' > src/datasets/champion.json
           echo "Fetching runes dataset..."
-          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/runesReforged.json" | jq '.' > src/datasets/runesReforged.json
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${patchVer}/data/en_US/runesReforged.json" | jq '.' > src/datasets/runesReforged.json
           echo "Fetching summoner spells dataset..."
-          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/summoner.json" | jq '.' > src/datasets/summoner.json
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${patchVer}/data/en_US/summoner.json" | jq '.' > src/datasets/summoner.json
           echo "Fetching items dataset..."
-          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/item.json" | jq '.' > src/datasets/item.json
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${patchVer}/data/en_US/item.json" | jq '.' > src/datasets/item.json
           echo "Fetching queues dataset..."
           curl -fs "https://static.developer.riotgames.com/docs/lol/queues.json" | jq '.' > src/datasets/queues.json
           echo "Fetching arena dataset..."

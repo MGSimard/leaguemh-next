@@ -2,7 +2,7 @@ import Link from "next/link";
 import { modeDictionary, reverseRegionDictionary, timeSince, calcDuration } from "@/lib/helpers";
 import { getMatchData } from "@/server/actions";
 
-const TeamsArena = ({ players, dsChampions, ddVersion, platformId }) => {
+const TeamsArena = ({ players, dsChampions, patchVer, platformId }) => {
   const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
 
   return (
@@ -13,7 +13,7 @@ const TeamsArena = ({ players, dsChampions, ddVersion, platformId }) => {
             <div
               className="participantChamp"
               style={{
-                backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, ddVersion)}")`,
+                backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
               }}></div>
             <span>{plr.riotIdGameName}</span>
           </Link>
@@ -23,7 +23,7 @@ const TeamsArena = ({ players, dsChampions, ddVersion, platformId }) => {
   );
 };
 
-const TeamsStandard = ({ players, dsChampions, ddVersion, platformId }) => {
+const TeamsStandard = ({ players, dsChampions, patchVer, platformId }) => {
   const teamOne = players.filter((player) => player.teamId === 100);
   const teamTwo = players.filter((player) => player.teamId === 200);
 
@@ -36,7 +36,7 @@ const TeamsStandard = ({ players, dsChampions, ddVersion, platformId }) => {
               <div
                 className="participantChamp"
                 style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, ddVersion)}")`,
+                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
                 }}></div>
               <span>{plr.riotIdGameName}</span>
             </Link>
@@ -50,7 +50,7 @@ const TeamsStandard = ({ players, dsChampions, ddVersion, platformId }) => {
               <div
                 className="participantChamp"
                 style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, ddVersion)}")`,
+                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
                 }}></div>
               <span>{plr.riotIdGameName}</span>
             </Link>
@@ -61,7 +61,7 @@ const TeamsStandard = ({ players, dsChampions, ddVersion, platformId }) => {
   );
 };
 
-const getRunesSumsAugs = (num, queueId, datasetX, dsArena, targetPlayerData, ddVersion) => {
+const getRunesSumsAugs = (num, queueId, datasetX, dsArena, targetPlayerData, patchVer) => {
   // datasetX is Runes or Summoners depending on input.
 
   // If Arena, check for augment ID. Return augment asset image if found.
@@ -90,7 +90,7 @@ const getRunesSumsAugs = (num, queueId, datasetX, dsArena, targetPlayerData, ddV
     } else if (num === 2 || num === 4) {
       const sumId = targetPlayerData[`summoner${num / 2}Id`];
       if (Object.entries(datasetX).find(([spell, info]) => info.key == sumId)) {
-        return `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/spell/${
+        return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${
           Object.entries(datasetX).find(([spell, info]) => info.key == sumId)[1].image.full
         }`;
       }
@@ -99,16 +99,16 @@ const getRunesSumsAugs = (num, queueId, datasetX, dsArena, targetPlayerData, ddV
 };
 
 // Get all built items and return asset link, return null if no item in slot or bug
-const getItems = (dsItems, itemId, ddVersion) => {
+const getItems = (dsItems, itemId, patchVer) => {
   if (dsItems[itemId]) {
-    return `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/item/${dsItems[itemId].image.full}`;
+    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}`;
   } else return null;
 };
 
 // Get a champion frame, return asset link that matches the ID. Else return nothing, leave to empty string.
-const getChampFrame = (dsChampions, championId, ddVersion) => {
+const getChampFrame = (dsChampions, championId, patchVer) => {
   if (Object.entries(dsChampions).find(([champ, info]) => info.key == championId)) {
-    return `https://ddragon.leagueoflegends.com/cdn/${ddVersion}/img/champion/${
+    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/champion/${
       Object.entries(dsChampions).find(([champ, info]) => info.key == championId)[1].image.full
     }`;
   } else return null;
@@ -124,7 +124,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
   const { championId, champLevel, totalMinionsKilled, kills, deaths, assists, win } = targetPlayerData;
 
   // Dataset libraries to get URL asset pointers
-  const [ddVersion, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena] = dataset;
+  const [patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena] = dataset;
 
   return (
     <div className="match-card" style={{ backgroundColor: win ? "#182a44" : "#441818" }}>
@@ -145,7 +145,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
         <div
           className="mc-portrait"
           style={{
-            backgroundImage: `url("${getChampFrame(dsChampions, championId, ddVersion)}")`,
+            backgroundImage: `url("${getChampFrame(dsChampions, championId, patchVer)}")`,
           }}></div>
       </div>
       <div className="mc-right">
@@ -173,7 +173,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
                   dsSumSpells,
                   dsArena,
                   targetPlayerData,
-                  ddVersion
+                  patchVer
                 )}")`,
               }}></div>
             <div
@@ -185,7 +185,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
                   dsSumSpells,
                   dsArena,
                   targetPlayerData,
-                  ddVersion
+                  patchVer
                 )}")`,
               }}></div>
           </div>
@@ -205,54 +205,49 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item0, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item0, patchVer)}")`,
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item1, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item1, patchVer)}")`,
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item2, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item2, patchVer)}")`,
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item3, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item3, patchVer)}")`,
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item4, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item4, patchVer)}")`,
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item5, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item5, patchVer)}")`,
             }}></div>
         </div>
         <div className="trinket-container">
           <div
             className="trinket"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item6, ddVersion)}")`,
+              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item6, patchVer)}")`,
             }}></div>
         </div>
         <div className="teams-container">
           {queueId === 1700 || queueId === 1710 ? (
-            <TeamsArena
-              players={participants}
-              dsChampions={dsChampions}
-              ddVersion={ddVersion}
-              platformId={platformId}
-            />
+            <TeamsArena players={participants} dsChampions={dsChampions} patchVer={patchVer} platformId={platformId} />
           ) : (
             <TeamsStandard
               players={participants}
               dsChampions={dsChampions}
-              ddVersion={ddVersion}
+              patchVer={patchVer}
               platformId={platformId}
             />
           )}
