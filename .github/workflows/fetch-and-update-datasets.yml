@@ -35,8 +35,10 @@ jobs:
           mkdir -p src/datasets  # Create the datasets directory if it doesn't exist
           set -e  # Exit immediately if a command exits with a non-zero status
 
-          echo "Fetching Data Dragon version..."
-          ddVersion=$(curl -fs "https://ddragon.leagueoflegends.com/api/versions.json" | jq -r '.[0]')
+          echo "Fetching versions..."
+          curl -fs "https://ddragon.leagueoflegends.com/api/versions.json" | jq '.' > src/datasets/versions.json
+          ddVersion=$(jq -r '.[0]' src/datasets/versions.json)  # Extract the latest version
+
           if [ -z "$ddVersion" ]; then
             echo "Failed to fetch DataDragon version."
             exit 1
