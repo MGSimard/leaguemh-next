@@ -9,8 +9,24 @@ import {
   getRunesSumsAugs,
 } from "@/lib/helpers";
 import { getMatchData } from "@/server/actions";
+import versionsJson from "@/datasets/versions.json";
+import championsJson from "@/datasets/champion.json";
+import runesJson from "@/datasets/runesReforged.json";
+import sumSpellsJson from "@/datasets/summoner.json";
+import itemsJson from "@/datasets/item.json";
+import modesJson from "@/datasets/queues.json";
+import arenaJson from "@/datasets/arena.json";
+import { ParticipantDto } from "@/lib/typesMatchV5";
 
-const TeamsArena = ({ players, dsChampions, patchVer, platformId }) => {
+const patchVer = versionsJson[0];
+const dsChampions = championsJson.data;
+const dsRunes = runesJson;
+const dsSumSpells = sumSpellsJson.data;
+const dsItems = itemsJson.data;
+const dsModes = modesJson;
+const dsArena = arenaJson.augments;
+
+const TeamsArena = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
   const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
 
   return (
@@ -31,10 +47,11 @@ const TeamsArena = ({ players, dsChampions, patchVer, platformId }) => {
   );
 };
 
-const TeamsStandard = ({ players, dsChampions, patchVer, platformId }) => {
+const TeamsStandard = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
   const teamOne = players.filter((player) => player.teamId === 100);
   const teamTwo = players.filter((player) => player.teamId === 200);
 
+  console.log(platformId);
   return (
     <>
       <ul className="teamsStandard">
@@ -69,7 +86,12 @@ const TeamsStandard = ({ players, dsChampions, patchVer, platformId }) => {
   );
 };
 
-export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets }) {
+interface MatchCardPropTypes {
+  matchId: string;
+  targetPlayer: string;
+  regionPrefix: string;
+}
+export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCardPropTypes) {
   const matchData = await getMatchData(matchId, regionPrefix);
   const { data, message } = matchData;
 
@@ -83,9 +105,6 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
   // Simplify target player data
   const targetPlayerData = participants.find((player) => player.puuid === targetPlayer)!;
   const { championId, champLevel, totalMinionsKilled, kills, deaths, assists, win } = targetPlayerData;
-
-  // Dataset libraries to get URL asset pointers
-  const [patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = datasets;
 
   return (
     <div className="match-card" style={{ backgroundColor: win ? "#182a44" : "#441818" }}>
@@ -203,14 +222,9 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
         </div>
         <div className="teams-container">
           {queueId === 1700 || queueId === 1710 ? (
-            <TeamsArena players={participants} dsChampions={dsChampions} patchVer={patchVer} platformId={platformId} />
+            <TeamsArena players={participants} platformId={platformId} />
           ) : (
-            <TeamsStandard
-              players={participants}
-              dsChampions={dsChampions}
-              patchVer={patchVer}
-              platformId={platformId}
-            />
+            <TeamsStandard players={participants} platformId={platformId} />
           )}
         </div>
       </div>

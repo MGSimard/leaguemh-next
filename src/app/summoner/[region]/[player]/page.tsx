@@ -5,25 +5,11 @@ import { rankDisplayFormatter } from "@/lib/helpers";
 import { MatchCard } from "@/components/MatchCard";
 import { Spinner } from "@/components/Spinner";
 import versionsJson from "@/datasets/versions.json";
-import championsJson from "@/datasets/champion.json";
-import runesJson from "@/datasets/runesReforged.json";
-import sumSpellsJson from "@/datasets/summoner.json";
-import itemsJson from "@/datasets/item.json";
-import modesJson from "@/datasets/queues.json";
-import arenaJson from "@/datasets/arena.json";
 
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
-
-  const patchVer = versionsJson[0];
-  const dsChampions = championsJson.data;
-  const dsRunes = runesJson;
-  const dsSumSpells = sumSpellsJson.data;
-  const dsItems = itemsJson.data;
-  const dsModes = modesJson;
-  const dsArena = arenaJson.augments;
-
   const { data, message } = await getPlayerData(regionPrefix, summoner);
+  const patchVer = versionsJson[0];
 
   // Obviously handle this better later
   if (!data) return <div>You broke it idiot: {JSON.stringify(message)}</div>;
@@ -92,7 +78,6 @@ export default async function Page({ params }: { params: Promise<{ region: strin
                   matchId={matchId}
                   targetPlayer={targetIdentity.puuid}
                   regionPrefix={regionPrefix}
-                  datasets={[patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena]}
                 />
               ))}
             </Suspense>
