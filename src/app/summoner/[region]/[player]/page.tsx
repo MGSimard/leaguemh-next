@@ -86,17 +86,19 @@ export default async function Page({ params }: { params: Promise<{ region: strin
       <section>
         <h2>MATCH HISTORY</h2>
         <div className="match-history">
-          {matchIdList &&
-            matchIdList.map((matchId) => (
-              <Suspense key={matchId}>
+          {matchIdList && (
+            <Suspense>
+              {matchIdList.map((matchId) => (
                 <MatchCard
+                  key={matchId}
                   matchId={matchId}
                   targetPlayer={targetIdentity.puuid}
                   regionPrefix={regionPrefix}
                   datasets={[patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena]}
                 />
-              </Suspense>
-            ))}
+              ))}
+            </Suspense>
+          )}
         </div>
       </section>
     </main>
