@@ -8,6 +8,7 @@ import type {
   GetPlayerDataResTypes,
   LeagueV4ResTypes,
 } from "@/lib/types";
+import type { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -65,7 +66,7 @@ export async function getMatchData(matchId: string, regionPrefix: string): Promi
       `https://${cluster}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${APIKEY}`
     ).then((res) => {
       if (!res.ok) throw new Error(`FETCH ERROR: MATCH ${matchId}. STATUS: ${res.status}`);
-      return res.json();
+      return res.json() as Promise<MatchV5DtoResTypes>;
     });
 
     return { data: matchData, message: "SUCCESS: Match data fetched." };
