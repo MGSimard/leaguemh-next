@@ -1,7 +1,5 @@
 // https://developer.riotgames.com/apis#match-v5/GET_getMatch
 // In the future, consider setting enums once interfacing with these types.
-export type matchV5ListResTypes = string[];
-
 export interface MatchV5DtoResTypes {
   metadata: MetadataDto;
   info: InfoDto;

@@ -1,6 +1,6 @@
 "use server";
 import { regionDictionary } from "@/lib/helpers";
-import { GetPlayerDataResTypes } from "@/lib/types";
+import { GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -10,12 +10,13 @@ const APIKEY = process.env.RIOTAPIKEY;
 // return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
 // API KEY: ${process.env.RIOTAPIKEY}
 
-export async function getPlayerData(regionPrefix: string, summoner: string) {
+export async function getPlayerData(regionPrefix: string, summoner: string): Promise<GetPlayerDataResTypes> {
   // Get server shard(NA1), server cluster(americas), full region name(North America)
   const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
   const [summonerName, summonerTag] = summoner.split("-");
 
   try {
+    if (!fullRegion) throw new Error("ERROR: Invalid Region.");
     // prettier-ignore
     const targetIdentity = await fetch(
       `https://${cluster}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${summonerTag}?api_key=${APIKEY}`
@@ -41,7 +42,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
   }
 }
 
-export async function getMatchData(matchId: string, regionPrefix: string): Promise<GetPlayerDataResTypes> {
+export async function getMatchData(matchId: string, regionPrefix: string): Promise<GetMatchDataResTypes> {
   const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
 
   try {

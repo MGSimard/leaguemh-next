@@ -25,7 +25,8 @@ export default async function Page({ params }: { params: Promise<{ region: strin
 
   const { data, message } = await getPlayerData(regionPrefix, summoner);
 
-  if (!data) return <div>You broke it</div>;
+  // Obviously handle this better later
+  if (!data) return <div>You broke it idiot: {JSON.stringify(message)}</div>;
 
   const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
 

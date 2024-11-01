@@ -1,12 +1,11 @@
 import { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
-
 /* RIOT API TYPES */
-export interface accountsV1ResTypes {
+interface AccountsV1ResTypes {
   puuid: string;
   gameName: string;
   tagLine: string;
 }
-export interface summonerV4ResTypes {
+interface SummonerV4ResTypes {
   id: string;
   accountId: string;
   puuid: string;
@@ -14,7 +13,7 @@ export interface summonerV4ResTypes {
   revisionDate: number;
   summonerLevel: number;
 }
-export interface leagueV4ResTypes {
+interface LeagueV4ResTypes {
   leagueId: string;
   queueType: string;
   tier: string;
@@ -28,7 +27,16 @@ export interface leagueV4ResTypes {
   freshBlood: boolean;
   hotStreak: boolean;
 }
+type matchV5ListResTypes = string[];
+
 export interface GetPlayerDataResTypes {
+  data?: [AccountsV1ResTypes, SummonerV4ResTypes, LeagueV4ResTypes, matchV5ListResTypes, string];
+  message: string;
+}
+// AccountV1        SummonerV4       LeagueV4   MatchV5 (list), string
+//[targetIdentity, targetProfile, targetRank, matchIdList, fullRegion]
+
+export interface GetMatchDataResTypes {
   data?: MatchV5DtoResTypes;
   message: string;
 }

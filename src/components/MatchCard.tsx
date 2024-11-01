@@ -73,6 +73,8 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
   const matchData = await getMatchData(matchId, regionPrefix);
   const { data, message } = matchData;
 
+  // Render an error message, small little match card with no contents
+  // TODO: Do it later
   if (!data) return null;
 
   // Simplify some match data
