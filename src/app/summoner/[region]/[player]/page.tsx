@@ -15,9 +15,6 @@ import arenaJson from "@/datasets/arena.json";
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
 
-  console.log("PREFIX:", regionPrefix);
-  console.log("SUMMONER:", summoner);
-
   const patchVer = versionsJson[0];
   const dsChampions = championsJson.data;
   const dsRunes = runesJson;

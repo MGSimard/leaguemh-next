@@ -17,7 +17,6 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
 
   try {
     // prettier-ignore
-    console.log("FETCHING PLAYER DATA");
     const targetIdentity = await fetch(
       `https://${cluster}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${summonerTag}?api_key=${APIKEY}`
     ).then((res) => {
@@ -27,7 +26,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
     // prettier-ignore
     const [targetProfile, matchIdList] = await Promise.all([
       fetch(`https://${shard}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${targetIdentity.puuid}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: SUMMONER PROFILE. STATUS: ${res.status}`);return res.json();}),
-      fetch(`https://${cluster}.api.riotgames.com/lol/match/v5/matches/by-puuid/${targetIdentity.puuid}/ids?start=0&count=3&api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: MATCH ID LIST. STATUS: ${res.status}`);return res.json();}),
+      fetch(`https://${cluster}.api.riotgames.com/lol/match/v5/matches/by-puuid/${targetIdentity.puuid}/ids?start=0&count=10&api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: MATCH ID LIST. STATUS: ${res.status}`);return res.json();}),
     ]);
     // prettier-ignore
     const [targetRank] = await fetch(`https://${shard}.api.riotgames.com/lol/league/v4/entries/by-summoner/${targetProfile.id}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: LEAGUE RANK. STATUS: ${res.status}`);return res.json();});
