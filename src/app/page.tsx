@@ -5,7 +5,7 @@ export default function Page() {
     <main className="home-main">
       <section className="search-section">
         <h2>SEARCH SUMMONER</h2>
-        <small>&#40;Example: "North America", "Doublelift", "NA1"&#41;</small>
+        <small>&#40;Example: &quot;North America&quot;, &quot;Doublelift&quot;, &quot;NA1&quot;&#41;</small>
         <SearchComponent usedIn="home" />
       </section>
       <section>

@@ -9,22 +9,7 @@ import {
   getRunesSumsAugs,
 } from "@/lib/helpers";
 import { getMatchData } from "@/server/actions";
-import versionsJson from "@/datasets/versions.json";
-import championsJson from "@/datasets/champion.json";
-import runesJson from "@/datasets/runesReforged.json";
-import sumSpellsJson from "@/datasets/summoner.json";
-import itemsJson from "@/datasets/item.json";
-import modesJson from "@/datasets/queues.json";
-import arenaJson from "@/datasets/arena.json";
 import { ParticipantDto } from "@/lib/typesMatchV5";
-
-const patchVer = versionsJson[0];
-const dsChampions = championsJson.data;
-const dsRunes = runesJson;
-const dsSumSpells = sumSpellsJson.data;
-const dsItems = itemsJson.data;
-const dsModes = modesJson;
-const dsArena = arenaJson.augments;
 
 interface MatchCardPropTypes {
   matchId: string;
