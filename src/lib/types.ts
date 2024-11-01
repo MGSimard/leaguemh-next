@@ -1,6 +1,6 @@
 import type { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
 /* RIOT API TYPES */
-interface AccountsV1ResTypes {
+export interface AccountsV1ResTypes {
   puuid: string;
   gameName: string;
   tagLine: string;

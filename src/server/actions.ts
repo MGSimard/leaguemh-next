@@ -1,6 +1,6 @@
 "use server";
 import { regionDictionary } from "@/lib/helpers";
-import type { GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
+import type { AccountsV1ResTypes, GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -18,14 +18,12 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
   try {
     if (!fullRegion) throw new Error("ERROR: Invalid Region.");
     // prettier-ignore
-    const targetIdentity = await fetch(
+    const targetIdentity: AccountsV1ResTypes = await fetch(
       `https://${cluster}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${summonerTag}?api_key=${APIKEY}`
     ).then((res) => {
       if (!res.ok) throw new Error(`FETCH ERROR: ACCOUNT IDENTITY. STATUS: ${res.status}`);
       return res.json();
     });
-
-    if (!targetIdentity.puuid) throw new Error("ERROR: Summoner PUUID missing.");
 
     // prettier-ignore
     const [targetProfile, matchIdList] = await Promise.all([
