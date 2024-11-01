@@ -26,66 +26,6 @@ const dsItems = itemsJson.data;
 const dsModes = modesJson;
 const dsArena = arenaJson.augments;
 
-const TeamsArena = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
-  const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
-
-  return (
-    <ul className="teamsArena">
-      {orderedPlayers.map((plr) => (
-        <li key={plr.summonerId}>
-          <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
-            <div
-              className="participantChamp"
-              style={{
-                backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
-              }}></div>
-            <span>{plr.riotIdGameName}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
-const TeamsStandard = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
-  const teamOne = players.filter((player) => player.teamId === 100);
-  const teamTwo = players.filter((player) => player.teamId === 200);
-
-  console.log(platformId);
-  return (
-    <>
-      <ul className="teamsStandard">
-        {teamOne.map((plr) => (
-          <li key={plr.summonerId}>
-            <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
-              <div
-                className="participantChamp"
-                style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
-                }}></div>
-              <span>{plr.riotIdGameName}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <ul className="teamsStandard">
-        {teamTwo.map((plr) => (
-          <li key={plr.summonerId}>
-            <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
-              <div
-                className="participantChamp"
-                style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
-                }}></div>
-              <span>{plr.riotIdGameName}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-};
-
 interface MatchCardPropTypes {
   matchId: string;
   targetPlayer: string;
@@ -231,3 +171,62 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
     </div>
   );
 }
+
+const TeamsArena = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
+  const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
+
+  return (
+    <ul className="teamsArena">
+      {orderedPlayers.map((plr) => (
+        <li key={plr.summonerId}>
+          <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
+            <div
+              className="participantChamp"
+              style={{
+                backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+              }}></div>
+            <span>{plr.riotIdGameName}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const TeamsStandard = ({ players, platformId }: { players: ParticipantDto[]; platformId: string }) => {
+  const teamOne = players.filter((player) => player.teamId === 100);
+  const teamTwo = players.filter((player) => player.teamId === 200);
+
+  return (
+    <>
+      <ul className="teamsStandard">
+        {teamOne.map((plr) => (
+          <li key={plr.summonerId}>
+            <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
+              <div
+                className="participantChamp"
+                style={{
+                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+                }}></div>
+              <span>{plr.riotIdGameName}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <ul className="teamsStandard">
+        {teamTwo.map((plr) => (
+          <li key={plr.summonerId}>
+            <Link href={`/summoner/${reverseRegionDictionary(platformId)}/${plr.riotIdGameName}-${plr.riotIdTagline}`}>
+              <div
+                className="participantChamp"
+                style={{
+                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+                }}></div>
+              <span>{plr.riotIdGameName}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
