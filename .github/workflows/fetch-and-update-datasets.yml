@@ -1,0 +1,51 @@
+name: Fetch and Update Datasets
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Runs every 12 hours
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: '20'  # Define Node.js version
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}  # Use the variable
+
+      - name: Install Dependencies
+        run: pnpm install  # Use pnpm to install dependencies
+
+      - name: Fetch Datasets
+        run: |
+          mkdir -p src/datasets  # Create the datasets directory if it doesn't exist
+          set -e  # Exit immediately if a command exits with a non-zero status
+
+          echo "Fetching champion dataset..."
+          curl -o src/datasets/champion.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/champion.json"
+          echo "Fetching runes dataset..."
+          curl -o src/datasets/runesReforged.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/runesReforged.json"
+          echo "Fetching summoner spells dataset..."
+          curl -o src/datasets/summoner.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/summoner.json"
+          echo "Fetching items dataset..."
+          curl -o src/datasets/item.json "https://ddragon.leagueoflegends.com/cdn/latest/data/en_US/item.json"
+          echo "Fetching queues dataset..."
+          curl -o src/datasets/queues.json "https://static.developer.riotgames.com/docs/lol/queues.json"
+          echo "Fetching arena dataset..."
+          curl -o src/datasets/arena.json "https://raw.communitydragon.org/latest/cdragon/arena/en_us.json"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add src/datasets/*.json  # Add all JSON files
+          git commit -m "Update datasets" || echo "No changes to commit"
+          git push
