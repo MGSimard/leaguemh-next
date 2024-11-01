@@ -1,4 +1,4 @@
-import { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
+import type { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
 /* RIOT API TYPES */
 interface AccountsV1ResTypes {
   puuid: string;

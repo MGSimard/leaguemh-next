@@ -1,6 +1,6 @@
 "use server";
 import { regionDictionary } from "@/lib/helpers";
-import { GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
+import type { GetMatchDataResTypes, GetPlayerDataResTypes } from "@/lib/types";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -43,7 +43,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
 }
 
 export async function getMatchData(matchId: string, regionPrefix: string): Promise<GetMatchDataResTypes> {
-  const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
+  const [cluster] = regionDictionary(regionPrefix);
 
   try {
     const matchData = await fetch(

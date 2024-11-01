@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getMatchData } from "@/server/actions";
 import {
   modeDictionary,
   reverseRegionDictionary,
@@ -8,8 +9,7 @@ import {
   getChampFrame,
   getRunesSumsAugs,
 } from "@/lib/helpers";
-import { getMatchData } from "@/server/actions";
-import { ParticipantDto } from "@/lib/typesMatchV5";
+import type { ParticipantDto } from "@/lib/typesMatchV5";
 
 interface MatchCardPropTypes {
   matchId: string;
