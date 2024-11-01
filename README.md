@@ -1,10 +1,3 @@
-## TASK LIST:
-
-- [x] LEARN HOW TO USE GITHUB ACTIONS AS SOME FORM OF CRON JOB.
-- [x] MOVE GETLEAGUEDATASETS FETCHES INTO AUTOMATED ACTIONS EVERY N HOURS (12 or 24)
-      I really shouldn't be fetching these kind of per-patch, semi-static json files on user visits anymore, now that I have a better idea of what I'm doing in webdev. This would also allow me to forego typescript headaches, consistently having to log stuff I'm looking at etc.
-- [x] SO AGAIN, LEARN HOW TO AUTOMATICALLY DOWNLOAD THESE JSON FILES EVERY N HOURS AND FORCEDEPLOY
-
 <br/>
 <div align="center">
   <h3 align="center">LoLMH.Next</h3>
@@ -18,11 +11,15 @@
 
 ## About The Project
 
+![Screenshot](https://i.imgur.com/yfq46G1.png)
+
 This is a Nextjs migration of LoLMH.React. Easier than setting up node or paying for serverless funtions to hide API key + not having to deal with Riot's API CORS shenanigans. Below is the original react project intro.
 
 `A recreation of my vanilla LoLCBL project, minus the CBL part, in React. Its only purpose is to fetch match histories of players across all League of Legends regions with public APIs. This project acts as practice with React, queries, and dynamic cdn asset fetching.`
 
-Now migrated to Nextjs & TypeScript. Functionalities unchanged - prefer keeping it the way it was for posterity, and show growth process.
+Now migrated to Nextjs & TypeScript. ~~Functionalities unchanged - prefer keeping it the way it was for posterity, and show growth process.~~
+
+Lol I lied, I ended up learning about Github actions to set up bi-daily cron jobs to fetch semi-static datasets which represent game data usually updated per patch every 2ish weeks. I ended up reworking the majority of the app, but not so much as to bash my head against a wall trying to polish it as much as my other ones.
 
 ### Built With
 
