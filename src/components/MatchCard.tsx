@@ -4,7 +4,7 @@ import {
   reverseRegionDictionary,
   timeSince,
   calcDuration,
-  getItems,
+  getItem,
   getChampFrame,
   getRunesSumsAugs,
 } from "@/lib/helpers";
@@ -65,7 +65,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
         <div
           className="mc-portrait"
           style={{
-            backgroundImage: `url("${getChampFrame(dsChampions, championId, patchVer)}")`,
+            backgroundImage: `url("${getChampFrame(championId)}")`,
           }}></div>
       </div>
       <div className="mc-right">
@@ -74,12 +74,12 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(1, queueId, dsRunes, dsArena, targetPlayerData, patchVer)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(1, queueId, "runes", targetPlayerData)}")`,
               }}></div>
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(3, queueId, dsRunes, dsArena, targetPlayerData, patchVer)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(3, queueId, "runes", targetPlayerData)}")`,
                 backgroundSize: `${queueId === 1700 || queueId === 1710 ? "cover" : "50%"}`,
               }}></div>
           </div>
@@ -87,26 +87,12 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
             <div
               className="sum"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(
-                  2,
-                  queueId,
-                  dsSumSpells,
-                  dsArena,
-                  targetPlayerData,
-                  patchVer
-                )}")`,
+                backgroundImage: `url("${getRunesSumsAugs(2, queueId, "sums", targetPlayerData)}")`,
               }}></div>
             <div
               className="sum"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(
-                  4,
-                  queueId,
-                  dsSumSpells,
-                  dsArena,
-                  targetPlayerData,
-                  patchVer
-                )}")`,
+                backgroundImage: `url("${getRunesSumsAugs(4, queueId, "sums", targetPlayerData)}")`,
               }}></div>
           </div>
         </div>
@@ -125,39 +111,39 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }: MatchCa
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item0, patchVer),
+              backgroundImage: getItem(targetPlayerData.item0),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item1, patchVer),
+              backgroundImage: getItem(targetPlayerData.item1),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item2, patchVer),
+              backgroundImage: getItem(targetPlayerData.item2),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item3, patchVer),
+              backgroundImage: getItem(targetPlayerData.item3),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item4, patchVer),
+              backgroundImage: getItem(targetPlayerData.item4),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item5, patchVer),
+              backgroundImage: getItem(targetPlayerData.item5),
             }}></div>
         </div>
         <div className="trinket-container">
           <div
             className="trinket"
             style={{
-              backgroundImage: getItems(dsItems, targetPlayerData.item6, patchVer),
+              backgroundImage: getItem(targetPlayerData.item6),
             }}></div>
         </div>
         <div className="teams-container">
@@ -183,7 +169,7 @@ const TeamsArena = ({ players, platformId }: { players: ParticipantDto[]; platfo
             <div
               className="participantChamp"
               style={{
-                backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+                backgroundImage: `url("${getChampFrame(plr.championId)}")`,
               }}></div>
             <span>{plr.riotIdGameName}</span>
           </Link>
@@ -206,7 +192,7 @@ const TeamsStandard = ({ players, platformId }: { players: ParticipantDto[]; pla
               <div
                 className="participantChamp"
                 style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+                  backgroundImage: `url("${getChampFrame(plr.championId)}")`,
                 }}></div>
               <span>{plr.riotIdGameName}</span>
             </Link>
@@ -220,7 +206,7 @@ const TeamsStandard = ({ players, platformId }: { players: ParticipantDto[]; pla
               <div
                 className="participantChamp"
                 style={{
-                  backgroundImage: `url("${getChampFrame(dsChampions, plr.championId, patchVer)}")`,
+                  backgroundImage: `url("${getChampFrame(plr.championId)}")`,
                 }}></div>
               <span>{plr.riotIdGameName}</span>
             </Link>

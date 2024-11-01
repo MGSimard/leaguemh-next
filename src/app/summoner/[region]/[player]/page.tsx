@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
           </div>
           <div className="profileTable-container">
             {!data && `There was an issue fetching summoner profile. (${summoner})`}
-            {targetIdentity && (
+            {data && (
               <>
                 <h3 className="pBold">
                   {targetIdentity.gameName} <span>#{targetIdentity.tagLine}</span>

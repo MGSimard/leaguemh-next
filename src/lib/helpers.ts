@@ -1,3 +1,21 @@
+import { LeagueV4ResTypes } from "@/lib/types";
+import { ParticipantDto } from "./typesMatchV5";
+import versionsJson from "@/datasets/versions.json";
+import championsJson from "@/datasets/champion.json";
+import runesJson from "@/datasets/runesReforged.json";
+import sumSpellsJson from "@/datasets/summoner.json";
+import itemsJson from "@/datasets/item.json";
+import modesJson from "@/datasets/queues.json";
+import arenaJson from "@/datasets/arena.json";
+
+const patchVer = versionsJson[0];
+const dsChampions = championsJson.data;
+const dsRunes = runesJson;
+const dsSumSpells = sumSpellsJson.data;
+const dsItems = itemsJson.data;
+const dsModes = modesJson;
+const dsArena = arenaJson.augments;
+
 export function timeSince(startUnix: number, gameLength: number) {
   const currentUnix = Math.floor(new Date().getTime() / 1000);
   const gameStartUnix = Math.floor(startUnix / 1000);
@@ -220,7 +238,7 @@ export function reverseRegionDictionary(devId: string) {
   }
 }
 
-export function rankDisplayFormatter(resolvedRankData) {
+export function rankDisplayFormatter(resolvedRankData: LeagueV4ResTypes) {
   if (resolvedRankData.length) {
     const checkSoloQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_SOLO_5x5");
     if (checkSoloQueue) {
@@ -237,53 +255,69 @@ export function rankDisplayFormatter(resolvedRankData) {
 }
 
 // Get all built items and return asset link, return null if no item in slot or bug
-export function getItems(dsItems, itemId, patchVer) {
-  if (dsItems[itemId]) {
-    return `url("https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}")`;
-  } else return "none";
+function isValidId(key: string): key is keyof typeof dsItems {
+  return key in dsItems;
+}
+export function getItem(itemId: number) {
+  const itemIdStr = itemId.toString();
+  if (isValidId(itemIdStr)) {
+    const itemImage = dsItems[itemIdStr].image.full;
+    return `url("https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${itemImage}")`;
+  }
+  return "none";
 }
 
 // Get a champion frame, return asset link that matches the ID. Else return nothing, leave to empty string.
-export function getChampFrame(dsChampions, championId, patchVer) {
-  if (Object.entries(dsChampions).find(([champ, info]) => info.key == championId)) {
-    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/champion/${
-      Object.entries(dsChampions).find(([champ, info]) => info.key == championId)[1].image.full
-    }`;
-  } else return null;
+export function getChampFrame(championId: number) {
+  const championEntry = Object.entries(dsChampions).find(([_, info]) => info.key === championId.toString());
+  if (championEntry) {
+    const championImage = championEntry[1].image.full;
+    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/champion/${championImage}`;
+  }
+  return null;
 }
 
-export function getRunesSumsAugs(num, queueId, datasetX, dsArena, targetPlayerData, patchVer) {
+export function getRunesSumsAugs(
+  num: number,
+  queueId: number,
+  type: "sums" | "runes",
+  targetPlayerData: ParticipantDto
+) {
   // datasetX is Runes or Summoners depending on input.
+  const set = type === "sums" ? dsSumSpells : dsRunes;
 
   // If Arena, check for augment ID. Return augment asset image if found.
   if (queueId === 1700 || queueId === 1710) {
-    const augId = targetPlayerData[`playerAugment${num}`];
-    if (dsArena.find((augment) => augment.id === augId)) {
-      return `https://raw.communitydragon.org/latest/game/${dsArena.find((augment) => augment.id === augId).iconSmall}`;
+    const augId = targetPlayerData[`playerAugment${num}` as keyof ParticipantDto];
+    const augment = dsArena.find((augment) => augment.id === augId);
+
+    if (augment) {
+      return `https://raw.communitydragon.org/latest/game/${augment.iconSmall}`;
     }
   } else {
     // If not arena, get runes and summoners.
     if (num === 1) {
       // Keystone
-      for (let i = 0; i < datasetX.length; i++) {
+      for (let i = 0; i < dsRunes.length; i++) {
         let keystone;
-        keystone = datasetX[i].slots[0].runes.find(
-          (rune) => rune.id === targetPlayerData.perks.styles[0].selections[0].perk
+        keystone = dsRunes[i]!.slots[0]!.runes.find(
+          (rune) => rune.id === targetPlayerData.perks.styles[0]!.selections[0]!.perk
         );
         if (keystone) return `https://ddragon.canisback.com/img/${keystone.icon}`;
       }
     } else if (num === 3) {
-      const styleId = targetPlayerData.perks.styles[1].style;
-      // Secondary style
-      if (datasetX.find((style) => style.id === styleId)) {
-        return `https://ddragon.canisback.com/img/${datasetX.find((style) => style.id === styleId).icon}`;
+      const styleId = targetPlayerData.perks.styles[1]!.style;
+      const foundStyle = dsRunes.find((style) => style.id === styleId);
+
+      if (foundStyle) {
+        return `https://ddragon.canisback.com/img/${foundStyle.icon}`;
       }
     } else if (num === 2 || num === 4) {
-      const sumId = targetPlayerData[`summoner${num / 2}Id`];
-      if (Object.entries(datasetX).find(([spell, info]) => info.key == sumId)) {
-        return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${
-          Object.entries(datasetX).find(([spell, info]) => info.key == sumId)[1].image.full
-        }`;
+      const sumId = targetPlayerData[`summoner${num / 2}Id` as keyof ParticipantDto];
+      const foundSpell = Object.entries(dsSumSpells).find(([spell, info]) => info.key == sumId);
+      if (foundSpell) {
+        const spellImage = foundSpell[1].image.full;
+        return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${spellImage}`;
       }
     }
   }

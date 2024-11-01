@@ -13,7 +13,7 @@ interface SummonerV4ResTypes {
   revisionDate: number;
   summonerLevel: number;
 }
-interface LeagueV4ResTypes {
+export type LeagueV4ResTypes = {
   leagueId: string;
   queueType: string;
   tier: string;
@@ -26,7 +26,7 @@ interface LeagueV4ResTypes {
   inactive: boolean;
   freshBlood: boolean;
   hotStreak: boolean;
-}
+}[];
 type matchV5ListResTypes = string[];
 
 export interface GetPlayerDataResTypes {
