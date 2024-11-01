@@ -1,6 +1,7 @@
 /* DATASET TYPES */
 export type ddVersionTypes = string;
-export type dsChampionsTypes = {
+
+export interface dsChampionsTypes {
   [champion: string]: {
     version: string;
     id: string;
@@ -48,7 +49,7 @@ export type dsChampionsTypes = {
       attackspeed: number;
     };
   };
-}[];
+}
 export type dsRunesTypes = {
   id: number;
   key: string;
@@ -65,7 +66,7 @@ export type dsRunesTypes = {
     }[];
   }[];
 }[];
-export interface dsSumSpellsTypes {}
+export type dsSumSpellsTypes = {}[];
 export interface dsItemsTypes {}
 export interface dsModesTypes {}
 export interface dsArenaTypes {}
