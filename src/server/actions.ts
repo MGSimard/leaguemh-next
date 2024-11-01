@@ -24,6 +24,9 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
       if (!res.ok) throw new Error(`FETCH ERROR: ACCOUNT IDENTITY. STATUS: ${res.status}`);
       return res.json();
     });
+
+    if (!targetIdentity.puuid) throw new Error("ERROR: Summoner PUUID missing.");
+
     // prettier-ignore
     const [targetProfile, matchIdList] = await Promise.all([
       fetch(`https://${shard}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${targetIdentity.puuid}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: SUMMONER PROFILE. STATUS: ${res.status}`);return res.json();}),
