@@ -43,17 +43,17 @@ jobs:
           fi
 
           echo "Fetching champion dataset..."
-          curl -fs -o src/datasets/champion.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/champion.json"
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/champion.json" | jq '.' > src/datasets/champion.json
           echo "Fetching runes dataset..."
-          curl -fs -o src/datasets/runesReforged.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/runesReforged.json"
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/runesReforged.json" | jq '.' > src/datasets/runesReforged.json
           echo "Fetching summoner spells dataset..."
-          curl -fs -o src/datasets/summoner.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/summoner.json"
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/summoner.json" | jq '.' > src/datasets/summoner.json
           echo "Fetching items dataset..."
-          curl -fs -o src/datasets/item.json "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/item.json"
+          curl -fs "https://ddragon.leagueoflegends.com/cdn/${ddVersion}/data/en_US/item.json" | jq '.' > src/datasets/item.json
           echo "Fetching queues dataset..."
-          curl -fs -o src/datasets/queues.json "https://static.developer.riotgames.com/docs/lol/queues.json"
+          curl -fs "https://static.developer.riotgames.com/docs/lol/queues.json" | jq '.' > src/datasets/queues.json
           echo "Fetching arena dataset..."
-          curl -fs -o src/datasets/arena.json "https://raw.communitydragon.org/latest/cdragon/arena/en_us.json"
+          curl -fs "https://raw.communitydragon.org/latest/cdragon/arena/en_us.json" | jq '.' > src/datasets/arena.json
 
       - name: Commit and Push Changes
         run: |
