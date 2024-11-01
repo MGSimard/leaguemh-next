@@ -130,14 +130,13 @@ export interface dsItemsTypes {
     stats: { [stat: string]: number };
   };
 }
-export interface dsModesTypes {}
-export interface dsArenaTypes {}
-
-export type dsResTypes = {
+export type dsModesTypes = {
   queueId: number;
+  map: string;
   description: string | null;
   notes: string | null;
 }[];
+export interface dsArenaTypes {}
 
 /* RIOT API TYPES */
 export interface accountsV1ResTypes {
