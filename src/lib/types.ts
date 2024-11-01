@@ -49,7 +49,22 @@ export type dsChampionsTypes = {
     };
   };
 }[];
-export interface dsRunesTypes {}
+export type dsRunesTypes = {
+  id: number;
+  key: string;
+  icon: string;
+  name: string;
+  slots: {
+    runes: {
+      id: number;
+      key: string;
+      icon: string;
+      name: string;
+      shortDesc: string;
+      longDesc: string;
+    }[];
+  }[];
+}[];
 export interface dsSumSpellsTypes {}
 export interface dsItemsTypes {}
 export interface dsModesTypes {}
