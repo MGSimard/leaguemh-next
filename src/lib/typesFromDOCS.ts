@@ -1,7 +1,7 @@
 // https://developer.riotgames.com/apis#match-v5/GET_getMatch
 export interface MatchDto {
   metadata: MetadataDto;
-  Info: InfoDto;
+  info: InfoDto;
 }
 
 interface MetadataDto {
@@ -34,6 +34,7 @@ interface ParticipantDto {
   assistMePings: number; //Green flag
   assists: number;
   baronKills: number;
+  basicPings: number; //Missing from docs
   bountyLevel: number;
   champExperience: number;
   champLevel: number;
@@ -47,6 +48,7 @@ interface ParticipantDto {
   damageDealtToObjectives: number;
   damageDealtToTurrets: number;
   damageSelfMitigated: number;
+  dangerPings: number; //Missing from docs
   deaths: number;
   detectorWardsPlaced: number;
   doubleKills: number;
@@ -118,11 +120,14 @@ interface ParticipantDto {
   playerAugment2: number;
   playerAugment3: number;
   playerAugment4: number;
+  playerAugment5: number; //Missing from docs
+  playerAugment6: number; //Missing from docs
   playerSubteamId: number;
   pushPings: number; //Green minion
   profileIcon: number;
   puuid: string;
   quadraKills: number;
+  retreatPings: number;
   riotIdGameName: string;
   riotIdTagline: string;
   role: string;
@@ -174,33 +179,33 @@ interface ParticipantDto {
 
 interface ChallengesDto {
   "12AssistStreakCount": number;
-  baronBuffGoldAdvantageOverThreshold: number;
-  controlWardTimeCoverageInRiverOrEnemyHalf: number;
-  earliestBaron: number;
-  earliestDragonTakedown: number;
-  earliestElderDragon: number;
-  earlyLaningPhaseGoldExpAdvantage: number;
-  fasterSupportQuestCompletion: number;
-  fastestLegendary: number;
-  hadAfkTeammate: number;
-  highestChampionDamage: number;
-  highestCrowdControlScore: number;
-  highestWardKills: number;
-  junglerKillsEarlyJungle: number;
-  killsOnLanersEarlyJungleAsJungler: number;
-  laningPhaseGoldExpAdvantage: number;
+  baronBuffGoldAdvantageOverThreshold?: number; //Inconsistent response
+  controlWardTimeCoverageInRiverOrEnemyHalf?: number; //Inconsistent response
+  earliestBaron?: number; //Inconsistent response
+  earliestDragonTakedown?: number; //Inconsistent response
+  earliestElderDragon?: number; //Inconsistent response
+  earlyLaningPhaseGoldExpAdvantage?: number; //Inconsistent response
+  fasterSupportQuestCompletion?: number; //Inconsistent response
+  fastestLegendary?: number; //Inconsistent response
+  hadAfkTeammate?: number; //Inconsistent response
+  highestChampionDamage?: number; //Inconsistent response
+  highestCrowdControlScore?: number; //Inconsistent response
+  highestWardKills?: number; //Inconsistent response
+  junglerKillsEarlyJungle?: number; //Inconsistent response
+  killsOnLanersEarlyJungleAsJungler: number; //Inconsistent response
+  laningPhaseGoldExpAdvantage?: number; //Inconsistent response
   legendaryCount: number;
-  maxCsAdvantageOnLaneOpponent: number;
-  maxLevelLeadLaneOpponent: number;
+  maxCsAdvantageOnLaneOpponent?: number; //Inconsistent response
+  maxLevelLeadLaneOpponent?: number; //Inconsistent response
   mostWardsDestroyedOneSweeper: number;
-  mythicItemUsed: number;
-  playedChampSelectPosition: number;
-  soloTurretsLategame: number;
-  takedownsFirst25Minutes: number;
-  teleportTakedowns: number;
-  thirdInhibitorDestroyedTime: number;
-  threeWardsOneSweeperCount: number;
-  visionScoreAdvantageLaneOpponent: number;
+  mythicItemUsed?: number; //Inconsistent response
+  playedChampSelectPosition?: number; //Inconsistent response
+  soloTurretsLategame?: number; //Inconsistent response
+  takedownsFirst25Minutes?: number; //Inconsistent response
+  teleportTakedowns?: number; //Inconsistent response
+  thirdInhibitorDestroyedTime?: number; //Inconsistent response
+  threeWardsOneSweeperCount?: number; //Inconsistent response (also ayo?)
+  visionScoreAdvantageLaneOpponent?: number; //Inconsistent response
   InfernalScalePickup: number;
   fistBumpParticipation: number;
   voidMonsterKill: number;
@@ -231,11 +236,11 @@ interface ChallengesDto {
   epicMonsterSteals: number;
   epicMonsterStolenWithoutSmite: number;
   firstTurretKilled: number;
-  firstTurretKilledTime: number;
+  firstTurretKilledTime?: number; //Inconsistent response
   flawlessAces: number;
   fullTeamTakedown: number;
   gameLength: number;
-  getTakedownsInAllLanesEarlyJungleAsLaner: number;
+  getTakedownsInAllLanesEarlyJungleAsLaner?: number; //Inconsistent response
   goldPerMinute: number;
   hadOpenNexus: number;
   immobilizeAndKillWithAlly: number;
@@ -278,7 +283,7 @@ interface ChallengesDto {
   riftHeraldTakedowns: number;
   saveAllyFromDeath: number;
   scuttleCrabKills: number;
-  shortestTimeToAceFromFirstTakedown: number;
+  shortestTimeToAceFromFirstTakedown?: number; //Inconsistent response
   skillshotsDodged: number;
   skillshotsHit: number;
   snowballsHit: number;
