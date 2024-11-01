@@ -1,6 +1,16 @@
 import Link from "next/link";
-import { modeDictionary, reverseRegionDictionary, timeSince, calcDuration } from "@/lib/helpers";
+import {
+  modeDictionary,
+  reverseRegionDictionary,
+  timeSince,
+  calcDuration,
+  getItems,
+  getChampFrame,
+  getRunesSumsAugs,
+} from "@/lib/helpers";
 import { getMatchData } from "@/server/actions";
+import patchVersion from "@/datasets/versions.json";
+import dsChampions from "@/datasets/champion.json";
 
 const TeamsArena = ({ players, dsChampions, patchVer, platformId }) => {
   const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
@@ -61,74 +71,23 @@ const TeamsStandard = ({ players, dsChampions, patchVer, platformId }) => {
   );
 };
 
-const getRunesSumsAugs = (num, queueId, datasetX, dsArena, targetPlayerData, patchVer) => {
-  // datasetX is Runes or Summoners depending on input.
-
-  // If Arena, check for augment ID. Return augment asset image if found.
-  if (queueId === 1700 || queueId === 1710) {
-    const augId = targetPlayerData[`playerAugment${num}`];
-    if (dsArena.find((augment) => augment.id === augId)) {
-      return `https://raw.communitydragon.org/latest/game/${dsArena.find((augment) => augment.id === augId).iconSmall}`;
-    }
-  } else {
-    // If not arena, get runes and summoners.
-    if (num === 1) {
-      // Keystone
-      for (let i = 0; i < datasetX.length; i++) {
-        let keystone;
-        keystone = datasetX[i].slots[0].runes.find(
-          (rune) => rune.id === targetPlayerData.perks.styles[0].selections[0].perk
-        );
-        if (keystone) return `https://ddragon.canisback.com/img/${keystone.icon}`;
-      }
-    } else if (num === 3) {
-      const styleId = targetPlayerData.perks.styles[1].style;
-      // Secondary style
-      if (datasetX.find((style) => style.id === styleId)) {
-        return `https://ddragon.canisback.com/img/${datasetX.find((style) => style.id === styleId).icon}`;
-      }
-    } else if (num === 2 || num === 4) {
-      const sumId = targetPlayerData[`summoner${num / 2}Id`];
-      if (Object.entries(datasetX).find(([spell, info]) => info.key == sumId)) {
-        return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${
-          Object.entries(datasetX).find(([spell, info]) => info.key == sumId)[1].image.full
-        }`;
-      }
-    }
-  }
-};
-
-// Get all built items and return asset link, return null if no item in slot or bug
-const getItems = (dsItems, itemId, patchVer) => {
-  if (dsItems[itemId]) {
-    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}`;
-  } else return null;
-};
-
-// Get a champion frame, return asset link that matches the ID. Else return nothing, leave to empty string.
-const getChampFrame = (dsChampions, championId, patchVer) => {
-  if (Object.entries(dsChampions).find(([champ, info]) => info.key == championId)) {
-    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/champion/${
-      Object.entries(dsChampions).find(([champ, info]) => info.key == championId)[1].image.full
-    }`;
-  } else return null;
-};
-
-export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }) {
+export async function MatchCard({ matchId, targetPlayer, regionPrefix }) {
   const matchData = await getMatchData(matchId, regionPrefix);
+  const { data, message } = matchData;
+
   // Simplify some match data
-  const { gameDuration, gameStartTimestamp, participants, platformId, queueId } = matchData.info;
+  const { gameDuration, gameStartTimestamp, participants, platformId, queueId } = data.info;
 
   // Simplify target player data
   const targetPlayerData = participants.find((player) => player.puuid === targetPlayer);
   const { championId, champLevel, totalMinionsKilled, kills, deaths, assists, win } = targetPlayerData;
 
   // Dataset libraries to get URL asset pointers
-  const [patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena] = dataset;
+  // const [patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena] = dataset;
 
   return (
     <div className="match-card" style={{ backgroundColor: win ? "#182a44" : "#441818" }}>
-      <div className="mc-left">
+      {/* <div className="mc-left">
         <div className="data-top">
           <div className="dt1">
             <div className="matchMode">{modeDictionary(queueId)}</div>
@@ -252,7 +211,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, dataset }
             />
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

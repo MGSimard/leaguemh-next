@@ -2,15 +2,19 @@
 import { unstable_cacheLife as cacheLife } from "next/cache";
 import { Suspense } from "react";
 import { getPlayerData } from "@/server/actions";
-import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 import { SearchComponent } from "@/components/SearchBar";
 import { rankDisplayFormatter } from "@/lib/helpers";
 import { MatchCard } from "@/components/MatchCard";
 import { Spinner } from "@/components/Spinner";
-import "@/datasets/versions.json" fr;
+import versionsJson from "@/datasets/versions.json";
+import championJson from "@/datasets/champion.json";
+import runesJson from "@/datasets/runesReforged.json";
+import sumSpellsJson from "@/datasets/summoner.json";
+import itemsJson from "@/datasets/item.json";
+import modesJson from "@/datasets/queues.json";
+import arenaJson from "@/datasets/arena.json";
 
 // cacheLife("hours");
-
 /** cacheLife:
  * cacheLife({ stale: N, revalidate: N, expire: N }) N = SECONDS.
  * Stale:.......Cache may be stale on clients for N seconds before refetching from server.
@@ -21,19 +25,24 @@ import "@/datasets/versions.json" fr;
 
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
+  const [patchVer] = versionsJson;
+  // champions res.json() -> data.data
+  // runes res.json()
+  // Summs res.json() -> data.data
+  // Items res.json() -> data.data
+  // Modes res.json()
+  // Arena res.json() -> data.augments
+  // patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena
 
-  const [patchVer] = 
+  const { data, message } = await getPlayerData(regionPrefix, summoner);
 
-  // const { success, data, message } = await getLeagueDatasets();
-  // const { success, data, message } = await getPlayerData(regionPrefix, summoner);
-  // const [patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = data;
+  if (!data) return <div>You broke it</div>;
 
-  // if (!data) return <div>ERROR</div>;
-  // const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
+  const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
 
   return (
     <main>
-      {/* <section>
+      <section>
         <h2>SUMMONER PROFILE</h2>
         <div className="profile-card">
           <div className="icon-container">
@@ -48,7 +57,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
             <small>{targetProfile && targetProfile.summonerLevel}</small>
           </div>
           <div className="profileTable-container">
-            {!success && `There was an issuefetching summoner. ${summoner}`}
+            {!data && `There was an issue fetching summoner profile. (${summoner})`}
             {targetIdentity && (
               <>
                 <h3 className="pBold">
@@ -81,7 +90,8 @@ export default async function Page({ params }: { params: Promise<{ region: strin
           <SearchComponent usedIn="summoner" />
         </div>
       </section>
-      <section>
+      {/* Suspense match history with <Spinner /> fallback */}
+      {/* <section>
         <h2>MATCH HISTORY</h2>
         <div className="match-history">
           {matchIdList &&
@@ -100,14 +110,4 @@ export default async function Page({ params }: { params: Promise<{ region: strin
       </section> */}
     </main>
   );
-}
-
-{
-  /* Move match data fetching into diff component that gets fed puuid */
-}
-{
-  /* Suspense match history with <Spinner /> fallback */
-}
-{
-  /* Is loading, no errors */
 }

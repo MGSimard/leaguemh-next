@@ -235,3 +235,56 @@ export function rankDisplayFormatter(resolvedRankData) {
   }
   return "UNRANKED";
 }
+
+// Get all built items and return asset link, return null if no item in slot or bug
+export function getItems(dsItems, itemId, patchVer) {
+  if (dsItems[itemId]) {
+    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}`;
+  } else return null;
+}
+
+// Get a champion frame, return asset link that matches the ID. Else return nothing, leave to empty string.
+export function getChampFrame(dsChampions, championId, patchVer) {
+  if (Object.entries(dsChampions).find(([champ, info]) => info.key == championId)) {
+    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/champion/${
+      Object.entries(dsChampions).find(([champ, info]) => info.key == championId)[1].image.full
+    }`;
+  } else return null;
+}
+
+export function getRunesSumsAugs(num, queueId, datasetX, dsArena, targetPlayerData, patchVer) {
+  // datasetX is Runes or Summoners depending on input.
+
+  // If Arena, check for augment ID. Return augment asset image if found.
+  if (queueId === 1700 || queueId === 1710) {
+    const augId = targetPlayerData[`playerAugment${num}`];
+    if (dsArena.find((augment) => augment.id === augId)) {
+      return `https://raw.communitydragon.org/latest/game/${dsArena.find((augment) => augment.id === augId).iconSmall}`;
+    }
+  } else {
+    // If not arena, get runes and summoners.
+    if (num === 1) {
+      // Keystone
+      for (let i = 0; i < datasetX.length; i++) {
+        let keystone;
+        keystone = datasetX[i].slots[0].runes.find(
+          (rune) => rune.id === targetPlayerData.perks.styles[0].selections[0].perk
+        );
+        if (keystone) return `https://ddragon.canisback.com/img/${keystone.icon}`;
+      }
+    } else if (num === 3) {
+      const styleId = targetPlayerData.perks.styles[1].style;
+      // Secondary style
+      if (datasetX.find((style) => style.id === styleId)) {
+        return `https://ddragon.canisback.com/img/${datasetX.find((style) => style.id === styleId).icon}`;
+      }
+    } else if (num === 2 || num === 4) {
+      const sumId = targetPlayerData[`summoner${num / 2}Id`];
+      if (Object.entries(datasetX).find(([spell, info]) => info.key == sumId)) {
+        return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/spell/${
+          Object.entries(datasetX).find(([spell, info]) => info.key == sumId)[1].image.full
+        }`;
+      }
+    }
+  }
+}

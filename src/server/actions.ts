@@ -1,5 +1,6 @@
 "use server";
 import { regionDictionary } from "@/lib/helpers";
+import { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
 
 const APIKEY = process.env.RIOTAPIKEY;
 
@@ -26,25 +27,29 @@ export async function getPlayerData(regionPrefix: string, summoner: string) {
     const [targetRank] = await fetch(`https://${shard}.api.riotgames.com/lol/league/v4/entries/by-summoner/${targetProfile.id}?api_key=${APIKEY}`).then((res) => {if (!res.ok) throw new Error(`FETCH ERROR: LEAGUE RANK. STATUS: ${res.status}`);return res.json();});
 
     return {
-      success: true,
       data: [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion],
       message: "SUCCESS: Profile data fetched.",
     };
   } catch (err: unknown) {
     console.error(err instanceof Error ? err.message : "UNKNOWN ERROR.");
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
 
 export async function getMatchData(matchId: string, regionPrefix: string) {
   const [shard, cluster, fullRegion] = regionDictionary(regionPrefix);
 
-  const matchData = await fetch(
-    `https://${cluster}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${APIKEY}`
-  ).then((res) => {
-    if (!res.ok) throw new Error(`FETCH ERROR: MATCH ${matchId}. STATUS: ${res.status}`);
-    return res.json();
-  });
+  try {
+    const matchData = await fetch(
+      `https://${cluster}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${APIKEY}`
+    ).then((res) => {
+      if (!res.ok) throw new Error(`FETCH ERROR: MATCH ${matchId}. STATUS: ${res.status}`);
+      return res.json();
+    });
 
-  return matchData;
+    return { data: matchData, message: "SUCCESS: Match data fetched." };
+  } catch (err: unknown) {
+    console.error(err instanceof Error ? err.message : "UNKNOWN ERROR.");
+    return { message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+  }
 }
