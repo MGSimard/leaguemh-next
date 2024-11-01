@@ -1,10 +1,16 @@
-export interface accountsV1Types {
+export interface queueTypes {
+  queueId: number;
+  description: string | null;
+  notes: string | null;
+}
+export type queueResTypes = queueTypes[];
+
+export interface accountsV1ResTypes {
   puuid: string;
   gameName: string;
   tagLine: string;
 }
-
-export interface summonerV4Types {
+export interface summonerV4ResTypes {
   id: string;
   accountId: string;
   puuid: string;
@@ -12,8 +18,7 @@ export interface summonerV4Types {
   revisionDate: number;
   summonerLevel: number;
 }
-
-export interface leagueV4Types {
+export interface leagueV4ResTypes {
   leagueId: string;
   queueType: string;
   tier: string;
@@ -27,5 +32,3 @@ export interface leagueV4Types {
   freshBlood: boolean;
   hotStreak: boolean;
 }
-
-export type matchV5ListTypes = string[];
