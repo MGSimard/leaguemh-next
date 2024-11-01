@@ -6,6 +6,7 @@ import type {
   MatchV5ListResTypes,
   GetMatchDataResTypes,
   GetPlayerDataResTypes,
+  LeagueV4ResTypes,
 } from "@/lib/types";
 
 const APIKEY = process.env.RIOTAPIKEY;
@@ -17,25 +18,25 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
 
   try {
     if (!fullRegion) throw new Error("ERROR: Invalid Region.");
-    const targetIdentity: AccountsV1ResTypes = await fetch(
+    const targetIdentity = await fetch(
       `https://${cluster}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${summonerTag}?api_key=${APIKEY}`
     ).then((res) => {
       if (!res.ok) throw new Error(`FETCH ERROR: ACCOUNT IDENTITY. STATUS: ${res.status}`);
-      return res.json();
+      return res.json() as Promise<AccountsV1ResTypes>;
     });
 
-    const [targetProfile, matchIdList]: [SummonerV4ResTypes, MatchV5ListResTypes] = await Promise.all([
+    const [targetProfile, matchIdList] = await Promise.all([
       fetch(
         `https://${shard}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${targetIdentity.puuid}?api_key=${APIKEY}`
       ).then((res) => {
         if (!res.ok) throw new Error(`FETCH ERROR: SUMMONER PROFILE. STATUS: ${res.status}`);
-        return res.json();
+        return res.json() as Promise<SummonerV4ResTypes>;
       }),
       fetch(
         `https://${cluster}.api.riotgames.com/lol/match/v5/matches/by-puuid/${targetIdentity.puuid}/ids?start=0&count=1&api_key=${APIKEY}`
       ).then((res) => {
         if (!res.ok) throw new Error(`FETCH ERROR: MATCH ID LIST. STATUS: ${res.status}`);
-        return res.json();
+        return res.json() as Promise<MatchV5ListResTypes>;
       }),
     ]);
 
@@ -43,7 +44,7 @@ export async function getPlayerData(regionPrefix: string, summoner: string): Pro
       `https://${shard}.api.riotgames.com/lol/league/v4/entries/by-summoner/${targetProfile.id}?api_key=${APIKEY}`
     ).then((res) => {
       if (!res.ok) throw new Error(`FETCH ERROR: LEAGUE RANK. STATUS: ${res.status}`);
-      return res.json();
+      return res.json() as Promise<LeagueV4ResTypes>;
     });
 
     return {
