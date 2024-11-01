@@ -239,8 +239,8 @@ export function rankDisplayFormatter(resolvedRankData) {
 // Get all built items and return asset link, return null if no item in slot or bug
 export function getItems(dsItems, itemId, patchVer) {
   if (dsItems[itemId]) {
-    return `https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}`;
-  } else return null;
+    return `url("https://ddragon.leagueoflegends.com/cdn/${patchVer}/img/item/${dsItems[itemId].image.full}")`;
+  } else return "none";
 }
 
 // Get a champion frame, return asset link that matches the ID. Else return nothing, leave to empty string.

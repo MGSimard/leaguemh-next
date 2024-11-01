@@ -356,8 +356,18 @@ hr:not(footer hr) {
   background-color: #333;
   border-radius: 4px;
   overflow: hidden;
+  animation: fadeIn 0.5s ease-out;
 }
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* CHAMP FRAME, MODE, LENGTH, TIME SINCE, OUTCOME, LEVEL */
 .mc-left {
   position: relative;

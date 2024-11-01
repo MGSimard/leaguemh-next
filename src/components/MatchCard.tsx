@@ -73,11 +73,13 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
   const matchData = await getMatchData(matchId, regionPrefix);
   const { data, message } = matchData;
 
+  if (!data) return null;
+
   // Simplify some match data
   const { gameDuration, gameStartTimestamp, participants, platformId, queueId } = data.info;
 
   // Simplify target player data
-  const targetPlayerData = participants.find((player) => player.puuid === targetPlayer);
+  const targetPlayerData = participants.find((player) => player.puuid === targetPlayer)!;
   const { championId, champLevel, totalMinionsKilled, kills, deaths, assists, win } = targetPlayerData;
 
   // Dataset libraries to get URL asset pointers
@@ -111,12 +113,12 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(1, queueId, dsRunes, dsArena, targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(1, queueId, dsRunes, dsArena, targetPlayerData, patchVer)}")`,
               }}></div>
             <div
               className="rune"
               style={{
-                backgroundImage: `url("${getRunesSumsAugs(3, queueId, dsRunes, dsArena, targetPlayerData)}")`,
+                backgroundImage: `url("${getRunesSumsAugs(3, queueId, dsRunes, dsArena, targetPlayerData, patchVer)}")`,
                 backgroundSize: `${queueId === 1700 || queueId === 1710 ? "cover" : "50%"}`,
               }}></div>
           </div>
@@ -162,39 +164,39 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets 
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item0, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item0, patchVer),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item1, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item1, patchVer),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item2, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item2, patchVer),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item3, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item3, patchVer),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item4, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item4, patchVer),
             }}></div>
           <div
             className="item"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item5, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item5, patchVer),
             }}></div>
         </div>
         <div className="trinket-container">
           <div
             className="trinket"
             style={{
-              backgroundImage: `url("${getItems(dsItems, targetPlayerData.item6, patchVer)}")`,
+              backgroundImage: getItems(dsItems, targetPlayerData.item6, patchVer),
             }}></div>
         </div>
         <div className="teams-container">

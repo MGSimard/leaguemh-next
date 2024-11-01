@@ -1,3 +1,5 @@
+import { MatchV5DtoResTypes } from "@/lib/typesMatchV5";
+
 /* RIOT API TYPES */
 export interface accountsV1ResTypes {
   puuid: string;
@@ -25,4 +27,8 @@ export interface leagueV4ResTypes {
   inactive: boolean;
   freshBlood: boolean;
   hotStreak: boolean;
+}
+export interface GetPlayerDataResTypes {
+  data?: MatchV5DtoResTypes;
+  message: string;
 }
