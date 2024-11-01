@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { getPlayerData } from "@/server/actions";
 import { getLeagueDatasets } from "@/lib/getLeagueDatasets";
 import { SearchComponent } from "@/components/SearchBar";
+import { rankDisplayFormatter } from "@/lib/helpers";
 import { MatchCard } from "@/components/MatchCard";
 import { Spinner } from "@/components/Spinner";
 // cacheLife("hours");
@@ -20,26 +21,10 @@ export default async function Page({ params }: { params: Promise<{ region: strin
   const { region: regionPrefix, player: summoner } = await params;
 
   const [ddVersion, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = await getLeagueDatasets();
-  const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = await getPlayerData(
-    regionPrefix,
-    summoner
-  );
+  const { success, data, message } = await getPlayerData(regionPrefix, summoner);
 
-  const rankHandler = (resolvedRankData) => {
-    if (resolvedRankData.length) {
-      const checkSoloQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_SOLO_5x5");
-      if (checkSoloQueue) {
-        const { tier, rank, leaguePoints } = checkSoloQueue;
-        return `${tier} ${rank} ${leaguePoints}LP (SOLO)`;
-      }
-      const checkFlexQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_FLEX_SR");
-      if (checkFlexQueue) {
-        const { tier, rank, leaguePoints } = checkFlexQueue;
-        return `${tier} ${rank} ${leaguePoints}LP (FLEX)`;
-      }
-    }
-    return "UNRANKED";
-  };
+  if (!data) return <div>ERROR</div>;
+  const [targetIdentity, targetProfile, targetRank, matchIdList, fullRegion] = data;
 
   return (
     <main>
@@ -58,13 +43,12 @@ export default async function Page({ params }: { params: Promise<{ region: strin
             <small>{targetProfile && targetProfile.summonerLevel}</small>
           </div>
           <div className="profileTable-container">
-            {/* `There was a problem fetching summoner. ${summoner}` */}
-            {/* LOADING STATE: Loading... */}
+            {!success && `There was an issuefetching summoner. ${summoner}`}
             {targetIdentity && (
               <>
                 <h3 className="pBold">
                   {targetIdentity.gameName} <span>#{targetIdentity.tagLine}</span>
-                  {targetRank && <small className="pLabel">{rankHandler(targetRank)}</small>}
+                  {targetRank && <small className="pLabel">{rankDisplayFormatter(targetRank)}</small>}
                 </h3>
               </>
             )}
@@ -100,7 +84,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
           {/* Is loading, no errors */}
           {matchIdList &&
             matchIdList.map((matchId) => (
-              <Suspense fallback={<Spinner />}>
+              <Suspense fallback={<Spinner />} key={matchId}>
                 <MatchCard
                   key={matchId}
                   matchId={matchId}

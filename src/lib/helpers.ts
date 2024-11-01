@@ -219,3 +219,19 @@ export function reverseRegionDictionary(devId: string) {
       return;
   }
 }
+
+export function rankDisplayFormatter(resolvedRankData) {
+  if (resolvedRankData.length) {
+    const checkSoloQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_SOLO_5x5");
+    if (checkSoloQueue) {
+      const { tier, rank, leaguePoints } = checkSoloQueue;
+      return `${tier} ${rank} ${leaguePoints}LP (SOLO)`;
+    }
+    const checkFlexQueue = resolvedRankData.find((queue) => queue.queueType === "RANKED_FLEX_SR");
+    if (checkFlexQueue) {
+      const { tier, rank, leaguePoints } = checkFlexQueue;
+      return `${tier} ${rank} ${leaguePoints}LP (FLEX)`;
+    }
+  }
+  return "UNRANKED";
+}
