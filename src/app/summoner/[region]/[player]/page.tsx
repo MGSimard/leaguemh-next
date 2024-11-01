@@ -7,7 +7,7 @@ import { rankDisplayFormatter } from "@/lib/helpers";
 import { MatchCard } from "@/components/MatchCard";
 import { Spinner } from "@/components/Spinner";
 import versionsJson from "@/datasets/versions.json";
-import championJson from "@/datasets/champion.json";
+import championsJson from "@/datasets/champion.json";
 import runesJson from "@/datasets/runesReforged.json";
 import sumSpellsJson from "@/datasets/summoner.json";
 import itemsJson from "@/datasets/item.json";
@@ -25,14 +25,13 @@ import arenaJson from "@/datasets/arena.json";
 
 export default async function Page({ params }: { params: Promise<{ region: string; player: string }> }) {
   const { region: regionPrefix, player: summoner } = await params;
-  const [patchVer] = versionsJson;
-  // champions res.json() -> data.data
-  // runes res.json()
-  // Summs res.json() -> data.data
-  // Items res.json() -> data.data
-  // Modes res.json()
-  // Arena res.json() -> data.augments
-  // patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena
+  const patchVer = versionsJson[0];
+  const dsChampions = championsJson.data;
+  const dsRunes = runesJson;
+  const dsSumSpells = sumSpellsJson.data;
+  const dsItems = itemsJson.data;
+  const dsModes = modesJson;
+  const dsArena = arenaJson.augments;
 
   const { data, message } = await getPlayerData(regionPrefix, summoner);
 
@@ -91,7 +90,7 @@ export default async function Page({ params }: { params: Promise<{ region: strin
         </div>
       </section>
       {/* Suspense match history with <Spinner /> fallback */}
-      {/* <section>
+      <section>
         <h2>MATCH HISTORY</h2>
         <div className="match-history">
           {matchIdList &&
@@ -102,12 +101,12 @@ export default async function Page({ params }: { params: Promise<{ region: strin
                   matchId={matchId}
                   regionPrefix={regionPrefix}
                   targetPlayer={targetIdentity.puuid}
-                  dataset={[patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena]}
+                  datasets={[patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena]}
                 />
               </Suspense>
             ))}
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }

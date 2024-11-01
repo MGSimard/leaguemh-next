@@ -9,8 +9,6 @@ import {
   getRunesSumsAugs,
 } from "@/lib/helpers";
 import { getMatchData } from "@/server/actions";
-import patchVersion from "@/datasets/versions.json";
-import dsChampions from "@/datasets/champion.json";
 
 const TeamsArena = ({ players, dsChampions, patchVer, platformId }) => {
   const orderedPlayers = [...players].sort((a, b) => a.placement - b.placement);
@@ -71,7 +69,7 @@ const TeamsStandard = ({ players, dsChampions, patchVer, platformId }) => {
   );
 };
 
-export async function MatchCard({ matchId, targetPlayer, regionPrefix }) {
+export async function MatchCard({ matchId, targetPlayer, regionPrefix, datasets }) {
   const matchData = await getMatchData(matchId, regionPrefix);
   const { data, message } = matchData;
 
@@ -83,11 +81,11 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }) {
   const { championId, champLevel, totalMinionsKilled, kills, deaths, assists, win } = targetPlayerData;
 
   // Dataset libraries to get URL asset pointers
-  // const [patchVer, dsChampions, dsModes, dsRunes, dsSumSpells, dsItems, dsArena] = dataset;
+  const [patchVer, dsChampions, dsRunes, dsSumSpells, dsItems, dsModes, dsArena] = datasets;
 
   return (
     <div className="match-card" style={{ backgroundColor: win ? "#182a44" : "#441818" }}>
-      {/* <div className="mc-left">
+      <div className="mc-left">
         <div className="data-top">
           <div className="dt1">
             <div className="matchMode">{modeDictionary(queueId)}</div>
@@ -211,7 +209,7 @@ export async function MatchCard({ matchId, targetPlayer, regionPrefix }) {
             />
           )}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
