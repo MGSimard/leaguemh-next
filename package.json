@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",
-    "geist": "^1.3.0",
     "next": "15.0.3-canary.2",
     "react": "19.0.0-rc-603e6108-20241029",
     "react-dom": "19.0.0-rc-603e6108-20241029",
