@@ -288,6 +288,12 @@
     "notes": "Deprecated in patch 9.23"
   },
   {
+    "queueId": 480,
+    "map": "Summoner's Rift",
+    "description": "Swiftplay Games",
+    "notes": null
+  },
+  {
     "queueId": 490,
     "map": "Summoner's Rift",
     "description": "Normal (Quickplay)",
@@ -573,6 +579,18 @@
     "queueId": 2020,
     "map": "Summoner's Rift",
     "description": "Tutorial 3",
+    "notes": null
+  },
+  {
+    "queueId": 2300,
+    "map": "The Bandlewood",
+    "description": "Brawl",
+    "notes": null
+  },
+  {
+    "queueId": 2400,
+    "map": "Howling Abyss",
+    "description": "ARAM: Mayhem",
     "notes": null
   }
 ]
